@@ -1,0 +1,57 @@
+Note: First of all, after your initial push where one person created the file structure, you should never do any work on master again.
+1. From your local master, create a new branch: git checkout -b branchName. Now you've created and switched to a new branch.
+
+2. Do all your work on this new branch.
+
+3. Once you're ready to send your changes to GitHub, add and commit your changes (do not push yet).
+
+4. Switch back to master and run: git pull origin master. This will bring all the changes from GitHub master to your master branch. Now your master is completely up-to-date.
+
+Note: Your terminal may open up a new screen with a message like this:
+
+# Please enter a commit message to explain why this merge is necessary,
+# especially if it merges an updated upstream into a topic branch.
+#
+# Lines starting with '#' will be ignored, and an empty message aborts
+# the commit.
+
+You can ignore this by clicking:
+    a. the Escape key
+    b. typing ":q"
+    c. the Enter key
+
+5. Now switch back to your branch: git checkout branchName.
+
+6. Then bring all the changes from your newly updated master branch into your working branch: git merge master. This merges all the changes in the master branch into your branch.
+
+7. You may have conflicts, so make sure you clean those up.
+
+8. Once the conflicts have been resolved, push your branch up to GitHub: git push origin branchName. Note that you're not running git push origin master. You're pushing your branch changes, not the master up to GitHub. This will create a new branch on GitHub.
+
+9. When you run that command, you should get feedback that looks something like this:
+
+Enumerating objects: 21, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 1.21 KiB | 1.21 MiB/s, done.
+Total 9 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 1 local object.
+remote:
+remote: Create a pull request for 'models' on GitHub by visiting:
+remote:      https://github.com/Jordanbrun/project2-rockhounding/pull/new/models
+remote:
+To https://github.com/Jordanbrun/project2-rockhounding.git
+* [new branch]      models -> models
+
+10. Grab that link that has "/pull/new/" in the path. In the example above, that'd be: https://github.com/Jordanbrun/project2-rockhounding/pull/new/models
+
+11. Go to that link and use it to create a new pull request.
+
+12. After you create the new pull request, you'll be prompted to merge your changes. Evaluate your changes and, once you're satisfied, click the Merge button.
+
+13. Now your teammates can switch to their master branches and run git pull origin master if they need your changes, or before they're getting ready to push their own changes.
+
+Note: If your teammate has just merged changes that you need for your own work, you can go through steps 3 – 7. Now you'll have their changes and can work with those in your code.
+
+14. After your changes have been merged, switch back to your master branch and run git pull origin master. Now your master branch has all the changes from your working branch. And now you can begin the process from step #1 again.
