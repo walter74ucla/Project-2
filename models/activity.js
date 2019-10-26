@@ -9,6 +9,6 @@ const activitySchema = new mongoose.Schema({
   	likes: Number //this is a stretch goal
 });
 
-const Activity = mongoose.model('Habit', habitSchema);
+const Activity = mongoose.model('Activity', activitySchema);
 
 module.exports = Activity;
