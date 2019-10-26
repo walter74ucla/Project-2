@@ -58,10 +58,12 @@ router.get('/:id/edit', async(req, res) => {
     const foundHabit = await Habit.findById(req.params.id);
       res.render('habits/edit.ejs', {
         habit: foundHabit
-      })  
+      }) 
+
   } catch {
     res.send(err);
   }
+
 });
 
 
@@ -70,9 +72,11 @@ router.put('/:id', async(req,res) => {
   try {
     const updatedHabit = await Habit.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/habits/' + req.params.id);
+  
   } catch {
     res.send(err);
   }
+
 });
 
 
@@ -101,6 +105,22 @@ router.get('/:id', async(req,res) => {
 	}
 
 });
+
+
+//Delete route await-async
+router.delete('/:id', async(req, res) => {
+  // find the habit and delete it
+  try {
+    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
+        // redirect to habits index    
+        res.redirect('/habits');
+  
+  } catch {
+    res.send(err);
+  }
+
+});
+
 
 
 module.exports = router;
