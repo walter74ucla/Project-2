@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 router.post('/login', async (req, res) => {
 
   // find if the user exits
-  try {                         //try to find by Id--duplicate usernames???
+  try {                         
     const foundUser = await User.findOne({username: req.body.username});
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
@@ -30,14 +30,14 @@ router.post('/login', async (req, res) => {
         } else {
             // if the passwords don't match
            req.session.message = 'Username or password is incorrect';
-           res.redirect('/');
+           res.redirect('/');// home page??
         }
 
 
     } else {
 
       req.session.message = 'Username or password is incorrect';
-      res.redirect('/');
+      res.redirect('/');// home page??
       // / is where the form is
 
 
@@ -62,7 +62,7 @@ router.post('/registration', async (req, res) => {
     // if username already exists, message: please create a different username
     if(foundUser){
       req.session.message = 'Username already exists.  Please try again.';
-      res.redirect('/home.ejs');
+      res.redirect('/');// home page??
     } else {
     // if username does not exist, proceed
     const userDbEntry = {};
