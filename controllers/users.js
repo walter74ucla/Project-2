@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 router.post('/login', async (req, res) => {
 
   // find if the user exits
-  try {
+  try {                         //try to find by Id--duplicate usernames???
     const foundUser = await User.findOne({username: req.body.username});
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
@@ -21,9 +21,10 @@ router.post('/login', async (req, res) => {
           // if there are failed attempts get rid of the message
           // from the session
           req.session.username = foundUser.username;
+          // user_id???
           req.session.logged   = true;
 
-          res.redirect('/authors')
+          res.redirect('users/show.ejs');//User My page-->show page??
 
 
         } else {
@@ -52,30 +53,37 @@ router.post('/login', async (req, res) => {
 
 
 router.post('/registration', async (req, res) => {
+  try {
+    // first thing to do is hash the password
+    const password = req.body.password; // the password from the form
+    const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+    // check to see if the username already exists
+    const foundUser = await User.findOne({username: req.body.username});
+    // if username already exists, message: please create a different username
+    if(foundUser){
+      req.session.message = 'Username already exists.  Please try again.';
+      res.redirect('/home.ejs');
+    } else {
+    // if username does not exist, proceed
+    const userDbEntry = {};
+    // right side of these are the info from the form
+    ///and our hashed password not the password from the form
+    userDbEntry.username = req.body.username;
+    userDbEntry.password = passwordHash;
+    userDbEntry.email    = req.body.email;
 
+    // added the user to the db
+    const createdUser = await User.create(userDbEntry);
+    // console.log(createdUser);
+    req.session.username = createdUser.username;
+    req.session.logged = true;
 
-  // first thing to do is hash the password
-  const password = req.body.password; // the password from the form
-  const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-
-
-  const userDbEntry = {};
-  // right side of these are the info from the form
-  ///and our hashed password not the password from the form
-  userDbEntry.username = req.body.username;
-  userDbEntry.password = passwordHash;
-  userDbEntry.email    = req.body.email;
-
-  // added the user to the db
-  const createdUser = await User.create(userDbEntry);
-  console.log(createdUser)
-  req.session.username = createdUser.username;
-  req.session.logged = true;
-
-  res.redirect('/authors')
-
-
-})
+    res.redirect('users/show.ejs');//User My page-->show page??
+    }
+  } catch {
+    res.send(err);
+  }
+});
 
 
 router.get('/logout', (req, res) => {
@@ -90,7 +98,7 @@ router.get('/logout', (req, res) => {
     }
   })
 
-})
+});
 
 
 
