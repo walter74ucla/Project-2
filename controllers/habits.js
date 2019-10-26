@@ -53,6 +53,7 @@ router.post('/', async(req, res) => {
 
 
 //Edit route async-await
+//Does this route need to be tied to a specific user?
 router.get('/:id/edit', async(req, res) => {
   try {
     const foundHabit = await Habit.findById(req.params.id);
@@ -68,6 +69,7 @@ router.get('/:id/edit', async(req, res) => {
 
 
 //Put route async-await
+//Does this need to be tied to a specific user?
 router.put('/:id', async(req,res) => {
   try {
     const updatedHabit = await Habit.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -108,6 +110,7 @@ router.get('/:id', async(req,res) => {
 
 
 //Delete route await-async
+//Does this need to be tied to a specific user?
 router.delete('/:id', async(req, res) => {
   // find the habit and delete it
   try {
