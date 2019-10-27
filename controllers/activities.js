@@ -52,6 +52,36 @@ router.post('/', async(req, res) => {
 });
 
 
+//Edit route async-await
+//Does this route need to be tied to a specific user?
+router.get('/:id/edit', async(req, res) => {
+  try {
+    const foundActivity = await Activity.findById(req.params.id);
+      res.render('activities/edit.ejs', {
+        activity: foundActivity
+      }) 
+
+  } catch {
+    res.send(err);
+  }
+
+});
+
+
+//Put route async-await
+//Does this need to be tied to a specific user?
+router.put('/:id', async(req,res) => {
+  try {
+    const updatedActivity = await Activity.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    res.redirect('/activities/' + req.params.id);
+  
+  } catch {
+    res.send(err);
+  }
+
+});
+
+
 //Show route async-await
 router.get('/:id', async(req,res) => {
 // find user by the id in their activities array
@@ -79,7 +109,20 @@ router.get('/:id', async(req,res) => {
 });
 
 
+//Delete route await-async
+//Does this need to be tied to a specific user?
+router.delete('/:id', async(req, res) => {
+  // find the activity and delete it
+  try {
+    const deletedActivity = await Activity.findByIdAndRemove(req.params.id);
+        // redirect to activities index    
+        res.redirect('/activities');
+  
+  } catch {
+    res.send(err);
+  }
 
+});
 
 
 

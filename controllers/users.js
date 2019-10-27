@@ -4,10 +4,9 @@ const User   = require('../models/user');
 const bcrypt = require('bcryptjs');
 
 
-
 router.post('/login', async (req, res) => {
 
-  // find if the user exits
+  // find if the user exists
   try {                         
     const foundUser = await User.findOne({username: req.body.username});
     // if User.findOne returns null/ or undefined it won't throw an error
@@ -21,11 +20,9 @@ router.post('/login', async (req, res) => {
           // if there are failed attempts get rid of the message
           // from the session
           req.session.username = foundUser.username;
-          // user_id???
           req.session.logged   = true;
 
           res.redirect('users/show.ejs');//User My page-->show page??
-
 
         } else {
             // if the passwords don't match
@@ -33,21 +30,17 @@ router.post('/login', async (req, res) => {
            res.redirect('/');// home page??
         }
 
-
     } else {
 
       req.session.message = 'Username or password is incorrect';
       res.redirect('/');// home page??
       // / is where the form is
 
-
     }
-
 
   } catch(err){
     res.send(err);
   }
-
 
 });
 
@@ -97,6 +90,23 @@ router.get('/logout', (req, res) => {
       res.redirect('/');
     }
   })
+
+});
+
+
+//Delete route await-async
+//Does this need to be tied to a specific user?
+router.delete('/:id', async(req, res) => {
+  // find the user and delete it
+  // delete all habits and activities associated with the user
+  try {
+    const deletedUser = await User.findByIdAndRemove(req.params.id);
+        // redirect to home page    
+        res.redirect('/');
+  
+  } catch {
+    res.send(err);
+  }
 
 });
 
