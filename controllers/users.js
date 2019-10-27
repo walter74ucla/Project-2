@@ -95,19 +95,41 @@ router.get('/logout', (req, res) => {
 
 
 //Delete route await-async
-//Does this need to be tied to a specific user?
 router.delete('/:id', async(req, res) => {
-  // find the user and delete it
-  // delete all habits and activities associated with the user
   try {
+    const habitIds = [];
+    const activityIds = [];
     const deletedUser = await User.findByIdAndRemove(req.params.id);
-        // redirect to home page    
-        res.redirect('/');
-  
+    for(let i = 0; i < deletedUser.habits.length; i++){
+          habitIds.push(deletedUser.habits[i]._id);
+      }
+      Habit.deleteMany(
+            {
+              _id: {
+                $in: habitIds
+              }
+            },
+            (err, data) => {
+              for(let j=0; j < deletedUser.activities.length; j++){
+                activities.push(deletedUser.activities[i]._id);
+              }
+              Activity.deleteMany(
+                      {
+                        _id: {
+                        $in: habitIds
+                      }
+                    },
+                    (err, data) => {
+                      res.redirect('/');          
+                    }    
+              )
+            }     
+        );
+
   } catch {
     res.send(err);
   }
-
+  
 });
 
 
