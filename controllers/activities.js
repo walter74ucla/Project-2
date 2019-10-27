@@ -33,17 +33,17 @@ router.get('/new', (req, res) => {
 //Post route async-await
 router.post('/', async(req, res) => {
   try {
-    // create habit
-    const newHabit = await Habit.create(req.body);
+    // create activity
+    const newActivity = await Activity.create(req.body);
     // find user by id (req.body.userId)
     const foundUser = await User.findById(req.body.userId);
-    // push newly created habit into foundUser.habits array
-    foundUser.habits.push(newHabit);
+    // push newly created activity into foundUser.activities array
+    foundUser.activities.push(newActivity);
     // save foundUser
     foundUser.save();
     // console.log('foundUser: ', foundUser);
     // res.redirect to index route
-    res.redirect('/habits');
+    res.redirect('/activities');
 
   } catch {
     res.send(err);
