@@ -42,6 +42,7 @@ router.get('/login', async (req, res) => {
 
 });
 
+//new user
 router.get('/new', (req,res) => {
   console.log("hitting new user route");
   //create new user
@@ -50,6 +51,7 @@ router.get('/new', (req,res) => {
   });
 })
 
+//register user
 router.post('/registration', async (req, res) => {
   console.log("hitting registration")
   try {
@@ -70,6 +72,7 @@ router.post('/registration', async (req, res) => {
       userDbEntry.username = req.body.username;
       userDbEntry.password = passwordHash;
       userDbEntry.email    = req.body.email;
+      userDbEntry.visible = req.body.visible === "on" ? true : false;
 
       // added the user to the db
       const createdUser = await User.create(userDbEntry);
@@ -78,7 +81,7 @@ router.post('/registration', async (req, res) => {
       req.session.userID = createdUser._id;
       req.session.logged = true;
 
-      res.redirect('users/'+createdUser._id);//User My page-->show page
+      res.redirect('/'+createdUser._id);//User My page-->show page
     }
   } catch(err) {
     res.send(err);
@@ -110,21 +113,24 @@ router.get('/', async(req, res) => {
   } catch(err) {
     res.send(err);
   }
-
 });
 
 
 //Show route async-await
 router.get('/:id', async(req, res) => {
+  console.log("hitting show route");
   try {
     const foundUser = await User.findById(req.params.id)
                                 .populate({path: 'habits'})//Do we need to add activities here??
                                 .exec();
     res.render('users/show.ejs', {
-        user: foundUser
+        user: foundUser,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID
       });
 
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 });
