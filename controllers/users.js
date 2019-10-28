@@ -97,6 +97,8 @@ router.get('/logout', (req, res) => {
 //Delete route await-async
 router.delete('/:id', async(req, res) => {
   try {
+    //find user and delete
+    //delete habits and activities associated with user
     const habitIds = [];
     const activityIds = [];
     const deletedUser = await User.findByIdAndRemove(req.params.id);
@@ -116,7 +118,7 @@ router.delete('/:id', async(req, res) => {
               Activity.deleteMany(
                       {
                         _id: {
-                        $in: habitIds
+                        $in: activityIds
                       }
                     },
                     (err, data) => {
@@ -129,7 +131,7 @@ router.delete('/:id', async(req, res) => {
   } catch {
     res.send(err);
   }
-  
+
 });
 
 
