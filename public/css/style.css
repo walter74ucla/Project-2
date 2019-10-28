@@ -12,9 +12,19 @@ header{
     height: 10vh;
     color:coral;
     display: inline-flex;
-    line-height: 10vh;
+    justify-content: space-between;
     border-bottom: 1px solid coral;
     padding-left: 20px;
+}
+
+section{
+    margin: 1vw 5vw;
+    padding: 2vw 2.5vw;
+}
+
+form{
+    margin: 0;
+    padding: 0;
 }
 
 .header-full{
@@ -34,4 +44,22 @@ header{
 .index-user-list{
     height: 50vh;
     width: 70%;
+}
+
+.add-activity{
+    background:  rgb(228, 243, 250);
+    border: 3px solid coral;
+    border-radius: 5vw;
+}
+
+.row{
+    display: inline;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.column{
+    display: inline;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }

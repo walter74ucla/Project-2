@@ -1,18 +1,22 @@
 <header>
     <h1>habit</h1>
-    <form>
-        <button class="fa fa-user"></button>
-    </form>
     <%if(!loggedIn){%>
-        <form action="/users/login" method="POST">
-            <input type="text" name="username" placeholder="username">
-            <input type="password" name="password" placeholder="password">
-            <button type="submit">Login</button>
-        </form>
-        <form action="/users/new" method="POST">
-            <button type="submit">Register</button>
-        </form>
+        <div>
+            <form action="/users/login" method="POST">
+                <input type="text" name="username" placeholder="username">
+                <input type="password" name="password" placeholder="password">
+                <button type="submit">Login</button>
+            </form>
+            <form action="/users/new" method="POST">
+                <button type="submit">Register</button>
+            </form>
+        </div>
     <%} else {%>
-        
+        <div class="row">
+            <%=username%>
+            <form action="/users/<%=userID%>">
+                <button type="submit" class="fa fa-user"></button>
+            </form>
+        </div>
     <%}%>
 </header>

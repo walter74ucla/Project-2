@@ -9,7 +9,9 @@ app.use(express.static('public'));
 //Home route
 app.get('/',(req,res)=>{
     res.render('users/show.ejs',{
-        loggedIn: false
+        loggedIn: true,
+        username: "AFinnerty",
+        userID: "id1",
     });
 })
 
