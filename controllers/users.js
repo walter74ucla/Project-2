@@ -93,6 +93,36 @@ router.get('/logout', (req, res) => {
 
 });
 
+//Index route async-await
+router.get('/', async(req, res) => {
+  try {
+    const allUsers = await User.find({});
+    res.render('users/index.ejs', {
+      users: allUsers
+    });
+
+  } catch(err) {
+    res.send(err);
+  }
+
+});
+
+
+//Show route async-await
+router.get('/:id', async(req, res) => {
+  try {
+    const foundUser = await User.findById(req.params.id)
+                                .populate({path: 'habits'})//Do we need to add activities here??
+                                .exec();
+    res.render('users/show.ejs', {
+        user: foundUser
+      });
+
+  } catch {
+    res.send(err);
+  }
+});
+
 
 //Delete route await-async
 router.delete('/:id', async(req, res) => {
@@ -128,7 +158,7 @@ router.delete('/:id', async(req, res) => {
             }     
         );
 
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 
