@@ -12,10 +12,13 @@
             </form>
         </div>
     <%} else {%>
-        <div class="row">
+        <div class="row align-right">
             <%=username%>
             <form action="/users/<%=userID%>">
                 <button type="submit" class="fa fa-user"></button>
+            </form>
+            <form action="/users/<%=userID%>/edit">
+                <button type="submit" class="fa fa-edit"></button>
             </form>
         </div>
     <%}%>

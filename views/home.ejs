@@ -9,13 +9,18 @@
             <h1>habit</h1>
         </section>
         <section>
+            <a href="/habits/">
+                all habits
+            </a>
+        </section>
+        <section>
             <h4>Login</h4>
-            <form action="/users/login" method="POST">
+            <form action="/users/login" method="GET">
                 <input type="text" name="username" placeholder="username"><br>
                 <input type="password" name="password" placeholder="password"><br>
                 <button type="submit">Login</button>
             </form> 
-            <form action="/users/new" method="POST">
+            <form action="/users/new" method="GET">
                 <button type="submit">Sign Up</button>
             </form> 
         </section>

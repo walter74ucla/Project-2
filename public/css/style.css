@@ -12,7 +12,7 @@ header{
     height: 10vh;
     color:coral;
     display: inline-flex;
-    justify-content: space-between;
+    justify-content: space-around;
     border-bottom: 1px solid coral;
     padding-left: 20px;
 }
@@ -50,6 +50,10 @@ form{
     background:  rgb(228, 243, 250);
     border: 3px solid coral;
     border-radius: 5vw;
+}
+
+.align-right{
+    text-align: right;
 }
 
 .row{
