@@ -10,15 +10,15 @@ router.get('/', async(req, res) => {
   console.log("habits index routes");
 	try {
 		//find all the habits
-		const allHabits = await Habit.find({});
+    const allHabits = await Habit.find({});
+    console.log(allHabits);
 		// render index.ejs and inject data
 		res.render('habits/index.ejs', {
       habits: allHabits,
-      loggedIn: res.session.logged,
-      username: res.session.username,
-      userID: res.session.userID,
+      loggedIn: req.session.logged,
+      username: req.session.username,
+      userID: req.session.userID
 		}) 
-
 	} catch(err) {
 		res.send(err);
   }
@@ -110,19 +110,38 @@ router.get('/:id', async(req,res) => {
 	}
 });
 
-//Delete route await-async
+//Delete habit from user route await-async
 //Does this need to be tied to a specific user?
 router.delete('/:id/:index', async(req, res) => {
   // find the habit and delete it
-  console.log("hitting delete route");
+  console.log("hitting habit delete from user route");
   try {
-    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
-        // redirect to habits index    
-        res.redirect('/habits');
+    //must delete habit from user array
+    const foundUser = await User.findById(req.params.id);
+    console.log(foundUser);
+    const foundHabit = foundUser.habits[req.params.index];
+    console.log(foundHabit);
+    const deletedHabit = await Habit.findByIdAndRemove(foundHabit._id);
+        // redirect to users index
+    res.redirect('/users/'+req.param.id);
   } catch(err) {
     res.send(err);
   }
+});
 
+//Delete habit from DB
+router.delete('/:id/', async(req, res) => {
+  // find the habit and delete it
+  console.log("hitting habit delete route");
+  try {
+    //must delete habit from user array
+    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
+    console.log(deletedHabit);
+        // redirect to users index   
+    res.redirect('/habits/');
+  } catch(err) {
+    res.send(err);
+  }
 });
 
 

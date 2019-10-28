@@ -8,10 +8,10 @@
     <main>
         <section class="user-habits">
             top habits
-                <% for(let i = 0; i < habits.length; i++) { %>
-                    <div value="<%=habits[i]._id%>">
-                        <%=habits[i].name%>
-                        <form action="/habits/<%=userID%>/<%=i%>?_methods=DELETE" method="POST">
+                <% for(let i = 0; i < user.habits.length; i++) { %>
+                    <div value="<%=user.habits[i]._id%>">
+                        <%=user.habits[i].name%>
+                        <form action="/habits/<%=userID%>/<%=i%>?_method=DELETE" method="POST">
                             <button type="submit">X</button>
                         </form>
                     </div>
@@ -43,11 +43,6 @@
                       <input type="text" name="date-year" value="">
                 </br>
                 Time (minutes): <input type="text" name="time" value=""></br>
-                <select name="habitId">
-                    <%# for(let i = 0; i < habits.length; i++) { %>
-                        <option value="<%#=habits[i]._id%>"><%#=habits[i].name%></option>
-                    <%# } %>
-                </select><br/>
                 <button type="submit">SUBMIT</button>
             </form>
         </section>
