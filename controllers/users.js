@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User   = require('../models/user');
+const Habit = require('../models/habit');
+const Activity = require('../models/activity');
 const bcrypt = require('bcryptjs');
 
 router.post('/login', async (req, res) => {
@@ -155,11 +157,14 @@ router.get('/:id', async(req, res) => {
     const foundUser = await User.findById(req.params.id)
                                 .populate({path: 'habits'})//Do we need to add activities here??
                                 .exec();
+    const foundHabits = await Habit.find({});
+    console.log(foundHabits);
     res.render('users/show.ejs', {
         user: foundUser,
         loggedIn: req.session.logged,
         username: req.session.username,
-        userID: req.session.userID
+        userID: req.params.id,
+        habits: foundHabits
       });
 
   } catch(err) {
@@ -170,6 +175,7 @@ router.get('/:id', async(req, res) => {
 
 //Delete route await-async
 router.delete('/:id', async(req, res) => {
+  console.log("delete user");
   try {
     //find user and delete
     //delete habits and activities associated with user

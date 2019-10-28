@@ -25,26 +25,28 @@ router.get('/', async(req, res) => {
 });
 
 
-//New route
-router.get('/new', (req, res) => {
+//new route
+router.post('/new', (req, res) => {
 	// user must be logged in to to get to this page
-	// render new view
-	res.render('/habits/new.ejs');
+  // render new view
+  console.log("hitting new habit");
+	//res.render('/habits/new.ejs');
 });
 
 
 //Post route async-await
-router.post('/', async(req, res) => {
+router.post('/:id', async(req, res) => {
+  console.log("hitting create habit");
   try {
     // create habit
     const newHabit = await Habit.create(req.body);
     // find user by id (req.body.userId)
-    const foundUser = await User.findById(req.body.userId);
+    const foundUser = await User.findById(req.params.id);
     // push newly created habit into foundUser.habits array
-    foundUser.habits.push(newHabit);
+    foundUser.habits.push(newHabit._id);
     // save foundUser
     foundUser.save();
-    // console.log('foundUser: ', foundUser);
+    console.log('foundUser: ', foundUser);
     // res.redirect to index route
     res.redirect('/habits');
 
@@ -108,11 +110,11 @@ router.get('/:id', async(req,res) => {
 	}
 });
 
-
 //Delete route await-async
 //Does this need to be tied to a specific user?
-router.delete('/:id', async(req, res) => {
+router.delete('/:id/:index', async(req, res) => {
   // find the habit and delete it
+  console.log("hitting delete route");
   try {
     const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
         // redirect to habits index    

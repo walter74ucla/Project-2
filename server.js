@@ -34,15 +34,7 @@ app.use('/habits', habitsController);
 
 //Home route
 app.get('/',(req,res)=>{
-    res.render('home.ejs',{
-        loggedIn: true,
-        username: "AFinnerty",
-        userID: "id1",
-    });
-    // res.render('home.ejs', {
-    // 	message: req.session.message,
-    // 	logOut: req.session.logOutMsg
-    // });
+    res.render('home.ejs');
 })
     
 
