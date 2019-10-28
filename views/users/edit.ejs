@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ./partials/head %>
+    <% include ../partials/head %>
 </head>
 <body>
-    <h1>EDIT USER</h1>
+    <% include ../partials/header %>
+    <main>
+            <h1>EDIT USER PROFILE</h1>
+            <section>
+            <form method="POST" action="/users/<%#=user._id%>?_method=PUT">
+                Username: <input type="text" name="username" value=<%#=user.username%>></br>
+                Password: <input type="password" name="password" value=<%#=user.password%>></br>
+                Visible: <input type="checkbox" name="visible" value=<%#=user.visible%>></br>
+                <button type="submit">SUBMIT</button>
+            </form>
+            <form method='GET' action='/users' >
+                <button type='submit'>back</button>
+            </form>
+            </section>
+    </main>
 </body>
 </html>

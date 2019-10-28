@@ -26,7 +26,7 @@ app.use(methodOverride('_method'));//must come before our routes
 app.use(bodyParser.urlencoded({extended: false}));
 
 const usersController = require('./controllers/users.js');
-app.use('/auth', usersController);
+app.use('/users', usersController);
 
 const habitsController = require('./controllers/habits.js');
 app.use('/habits', habitsController);
@@ -34,12 +34,17 @@ app.use('/habits', habitsController);
 
 //Home route
 app.get('/',(req,res)=>{
-    res.render('home.ejs', {
-    	message: req.session.message,
-    	logOut: req.session.logOutMsg
+    res.render('home.ejs',{
+        loggedIn: true,
+        username: "AFinnerty",
+        userID: "id1",
     });
-});
-
+    // res.render('home.ejs', {
+    // 	message: req.session.message,
+    // 	logOut: req.session.logOutMsg
+    // });
+})
+    
 
 
 app.listen(3000,()=>{

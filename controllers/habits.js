@@ -7,18 +7,21 @@ const User = require('../models/user.js');
 
 //Index route async-await
 router.get('/', async(req, res) => {
+  console.log("habits index routes");
 	try {
 		//find all the habits
 		const allHabits = await Habit.find({});
 		// render index.ejs and inject data
 		res.render('habits/index.ejs', {
-			habits: allHabits
+      habits: allHabits,
+      loggedIn: res.session.logged,
+      username: res.session.username,
+      userID: res.session.userID,
 		}) 
 
-	} catch {
+	} catch(err) {
 		res.send(err);
-	}
-
+  }
 });
 
 
@@ -45,12 +48,10 @@ router.post('/', async(req, res) => {
     // res.redirect to index route
     res.redirect('/habits');
 
-  } catch {
+  } catch(err) {
     res.send(err);
   }
-
 });
-
 
 //Edit route async-await
 //Does this route need to be tied to a specific user?
@@ -61,7 +62,7 @@ router.get('/:id/edit', async(req, res) => {
         habit: foundHabit
       }) 
 
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 
@@ -75,7 +76,7 @@ router.put('/:id', async(req,res) => {
     const updatedHabit = await Habit.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/habits/' + req.params.id);
   
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 
@@ -102,10 +103,9 @@ router.get('/:id', async(req,res) => {
 	      habit: foundUser.habits[0]
 	    });
 	
-	} catch {
+	} catch(err) {
 		res.send(err);
 	}
-
 });
 
 
@@ -117,8 +117,7 @@ router.delete('/:id', async(req, res) => {
     const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
         // redirect to habits index    
         res.redirect('/habits');
-  
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 

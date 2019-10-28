@@ -4,7 +4,6 @@ const Habit = require('../models/habit.js');
 const Activity = require('../models/activity.js');
 const User = require('../models/user.js');
 
-
 //Index route async-await
 router.get('/', async(req, res) => {
 	try {
@@ -15,12 +14,11 @@ router.get('/', async(req, res) => {
 			activities: allActivities
 		}) 
 
-	} catch {
+	} catch(err) {
 		res.send(err);
 	}
 
 });
-
 
 //New route
 router.get('/new', (req, res) => {
@@ -28,7 +26,6 @@ router.get('/new', (req, res) => {
 	// render new view
 	res.render('/activities/new.ejs');
 });
-
 
 //Post route async-await
 router.post('/', async(req, res) => {
@@ -45,7 +42,7 @@ router.post('/', async(req, res) => {
     // res.redirect to index route
     res.redirect('/activities');
 
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 
@@ -61,7 +58,7 @@ router.get('/:id/edit', async(req, res) => {
         activity: foundActivity
       }) 
 
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 
@@ -75,12 +72,11 @@ router.put('/:id', async(req,res) => {
     const updatedActivity = await Activity.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/activities/' + req.params.id);
   
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 
 });
-
 
 //Show route async-await
 router.get('/:id', async(req,res) => {
@@ -102,7 +98,7 @@ router.get('/:id', async(req,res) => {
 	      activity: foundUser.activities[0]
 	    });
 	
-	} catch {
+	} catch (err) {
 		res.send(err);
 	}
 
@@ -118,7 +114,7 @@ router.delete('/:id', async(req, res) => {
         // redirect to activities index    
         res.redirect('/activities');
   
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 

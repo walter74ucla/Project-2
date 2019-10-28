@@ -1,0 +1,25 @@
+<header>
+    <h1>habit</h1>
+    <%if(!loggedIn){%>
+        <div>
+            <form action="/users/login" method="GET">
+                <input type="text" name="username" placeholder="username">
+                <input type="password" name="password" placeholder="password">
+                <button type="submit">Login</button>
+            </form>
+            <form action="/users/new" method="GET">
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    <%} else {%>
+        <div class="row align-right">
+            <%=username%>
+            <form action="/users/<%=userID%>">
+                <button type="submit" class="fa fa-user"></button>
+            </form>
+            <form action="/users/<%=userID%>/edit">
+                <button type="submit" class="fa fa-edit"></button>
+            </form>
+        </div>
+    <%}%>
+</header>

@@ -3,17 +3,18 @@ const router = express.Router();
 const User   = require('../models/user');
 const bcrypt = require('bcryptjs');
 
-
 router.post('/login', async (req, res) => {
-
+  console.log("log-in route");
   // find if the user exists
-  try {                         
+  try {
+    console.log(req.body);                         
     const foundUser = await User.findOne({username: req.body.username});
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
-
+      console.log("user found");
         // compare their passwords
         if(bcrypt.compareSync(req.body.password, foundUser.password)){
+          console.log("password matches");
           // if true let's log them in
           // start our session
           req.session.message = '';
@@ -22,18 +23,19 @@ router.post('/login', async (req, res) => {
           req.session.username = foundUser.username;
           req.session.logged   = true;
 
-          res.redirect('users/show.ejs');//User My page-->show page??
+          res.redirect('/users/'+foundUser._id);//User My page-->show page
 
         } else {
+          console.log("wrong password");
             // if the passwords don't match
            req.session.message = 'Username or password is incorrect';
            res.redirect('/');// home page??
         }
 
     } else {
-
+      console.log("user not found");
       req.session.message = 'Username or password is incorrect';
-      res.redirect('/');// home page??
+      res.redirect('/');//User My page-->show page
       // / is where the form is
 
     }
@@ -44,43 +46,55 @@ router.post('/login', async (req, res) => {
 
 });
 
+//new user
+router.get('/new', (req,res) => {
+  console.log("hitting new user route");
+  //create new user
+  res.render('./users/new.ejs', {
+     loggedIn: false
+  });
+})
 
+//register user
 router.post('/registration', async (req, res) => {
+  console.log("hitting registration")
   try {
     // first thing to do is hash the password
     const password = req.body.password; // the password from the form
     const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     // check to see if the username already exists
     const foundUser = await User.findOne({username: req.body.username});
+    console.log(foundUser);
     // if username already exists, message: please create a different username
     if(foundUser){
       req.session.message = 'Username already exists.  Please try again.';
-      res.redirect('/');// home page??
+      res.redirect('/users/registration');// home page??
     } else {
-    // if username does not exist, proceed
-    const userDbEntry = {};
-    // right side of these are the info from the form
-    ///and our hashed password not the password from the form
-    userDbEntry.username = req.body.username;
-    userDbEntry.password = passwordHash;
-    userDbEntry.email    = req.body.email;
+      // if username does not exist, proceed
+      const userDbEntry = {};
+      // right side of these are the info from the form
+      ///and our hashed password not the password from the form
+      userDbEntry.username = req.body.username;
+      userDbEntry.password = passwordHash;
+      userDbEntry.email    = req.body.email;
+      userDbEntry.visible = req.body.visible === "on" ? true : false;
 
-    // added the user to the db
-    const createdUser = await User.create(userDbEntry);
-    // console.log(createdUser);
-    req.session.username = createdUser.username;
-    req.session.logged = true;
+      // added the user to the db
+      const createdUser = await User.create(userDbEntry);
+      // console.log(createdUser);
+      req.session.username = createdUser.username;
+      req.session.userID = createdUser._id;
+      req.session.logged = true;
 
-    res.redirect('users/show.ejs');//User My page-->show page??
+      res.redirect('/'+createdUser._id);//User My page-->show page
     }
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 });
 
-
+//logout
 router.get('/logout', (req, res) => {
-
   // creates a brand new cookie, without any of our properties
   // that we previously added to it
   req.session.destroy((err) => {
@@ -90,22 +104,23 @@ router.get('/logout', (req, res) => {
       res.redirect('/');
     }
   })
-
 });
 
 
 //Index route async-await
 router.get('/', async(req, res) => {
+  console.log("user index route");
   try {
     const allUsers = await User.find({});
     res.render('users/index.ejs', {
-      users: allUsers
+      users: allUsers,
+      loggedIn: req.session.logged,
+      username: req.session.username,
+      userID: req.session.userID
     });
-
   } catch(err) {
     res.send(err);
   }
-
 });
 
 
@@ -135,15 +150,19 @@ router.put('/:id', async(req,res) => {
 
 //Show route async-await
 router.get('/:id', async(req, res) => {
+  console.log("hitting show route");
   try {
     const foundUser = await User.findById(req.params.id)
                                 .populate({path: 'habits'})//Do we need to add activities here??
                                 .exec();
     res.render('users/show.ejs', {
-        user: foundUser
+        user: foundUser,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID
       });
 
-  } catch {
+  } catch(err) {
     res.send(err);
   }
 });
@@ -188,7 +207,5 @@ router.delete('/:id', async(req, res) => {
   }
 
 });
-
-
 
 module.exports = router;
