@@ -6,5 +6,15 @@
 <body>
     <% include ../partials/header %>
     <h1>USERS INDEX</h1>
+    <ul>
+    <%for(let i = 0; i < users.length; i++){%>
+        <li>
+            <a href="/users/<%=users[i]._id%>">
+                <%=users[i].username%>
+            </a>
+        </li>
+    <%}%>
+    </ul>
+    <a href="/">back</a>
 </body>
 </html>

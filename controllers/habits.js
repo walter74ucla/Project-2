@@ -10,41 +10,43 @@ router.get('/', async(req, res) => {
   console.log("habits index routes");
 	try {
 		//find all the habits
-		const allHabits = await Habit.find({});
+    const allHabits = await Habit.find({});
+    console.log(allHabits);
 		// render index.ejs and inject data
 		res.render('habits/index.ejs', {
       habits: allHabits,
-      loggedIn: res.session.logged,
-      username: res.session.username,
-      userID: res.session.userID,
+      loggedIn: req.session.logged,
+      username: req.session.username,
+      userID: req.session.userID
 		}) 
-
 	} catch(err) {
 		res.send(err);
   }
 });
 
 
-//New route
-router.get('/new', (req, res) => {
+//new route
+router.post('/new', (req, res) => {
 	// user must be logged in to to get to this page
-	// render new view
-	res.render('/habits/new.ejs');
+  // render new view
+  console.log("hitting new habit");
+	//res.render('/habits/new.ejs');
 });
 
 
 //Post route async-await
-router.post('/', async(req, res) => {
+router.post('/:id', async(req, res) => {
+  console.log("hitting create habit");
   try {
     // create habit
     const newHabit = await Habit.create(req.body);
     // find user by id (req.body.userId)
-    const foundUser = await User.findById(req.body.userId);
+    const foundUser = await User.findById(req.params.id);
     // push newly created habit into foundUser.habits array
-    foundUser.habits.push(newHabit);
+    foundUser.habits.push(newHabit._id);
     // save foundUser
     foundUser.save();
-    // console.log('foundUser: ', foundUser);
+    console.log('foundUser: ', foundUser);
     // res.redirect to index route
     res.redirect('/habits');
 
@@ -108,19 +110,38 @@ router.get('/:id', async(req,res) => {
 	}
 });
 
-
-//Delete route await-async
+//Delete habit from user route await-async
 //Does this need to be tied to a specific user?
-router.delete('/:id', async(req, res) => {
+router.delete('/:id/:index', async(req, res) => {
   // find the habit and delete it
+  console.log("hitting habit delete from user route");
   try {
-    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
-        // redirect to habits index    
-        res.redirect('/habits');
+    //must delete habit from user array
+    const foundUser = await User.findById(req.params.id);
+    console.log(foundUser);
+    const foundHabit = foundUser.habits[req.params.index];
+    console.log(foundHabit);
+    const deletedHabit = await Habit.findByIdAndRemove(foundHabit._id);
+        // redirect to users index
+    res.redirect('/users/'+req.param.id);
   } catch(err) {
     res.send(err);
   }
+});
 
+//Delete habit from DB
+router.delete('/:id/', async(req, res) => {
+  // find the habit and delete it
+  console.log("hitting habit delete route");
+  try {
+    //must delete habit from user array
+    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
+    console.log(deletedHabit);
+        // redirect to users index   
+    res.redirect('/habits/');
+  } catch(err) {
+    res.send(err);
+  }
 });
 
 

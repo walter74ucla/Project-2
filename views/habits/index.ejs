@@ -5,6 +5,17 @@
 </head>
 <body>
     <% include ../partials/header %>
-    <h1>ACTIVITIES INDEX</h1>
+    <h1>HABITS INDEX</h1>
+    <ul>
+        <%for(let i = 0; i < habits.length; i++){%>
+            <li>
+                <%=habits[i].name%>
+                <form action="/habits/<%=habits[i]._id%>?_method=DELETE" method="POST">
+                    <button type="submit">X</button>
+                </form>
+            </li>
+        <%}%>
+    </ul>
+    <a href="/">back</a>
 </body>
 </html>

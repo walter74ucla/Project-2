@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User   = require('../models/user');
+const Habit = require('../models/habit');
+const Activity = require('../models/activity');
 const bcrypt = require('bcryptjs');
 
 router.post('/login', async (req, res) => {
@@ -81,7 +83,7 @@ router.post('/registration', async (req, res) => {
 
       // added the user to the db
       const createdUser = await User.create(userDbEntry);
-      // console.log(createdUser);
+      console.log(createdUser);
       req.session.username = createdUser.username;
       req.session.userID = createdUser._id;
       req.session.logged = true;
@@ -151,15 +153,18 @@ router.put('/:id', async(req,res) => {
 //Show route async-await
 router.get('/:id', async(req, res) => {
   console.log("hitting show route");
+  console.log(req.session);
   try {
     const foundUser = await User.findById(req.params.id)
                                 .populate({path: 'habits'})//Do we need to add activities here??
                                 .exec();
+    const foundHabits = await Habit.find({});
     res.render('users/show.ejs', {
         user: foundUser,
         loggedIn: req.session.logged,
         username: req.session.username,
-        userID: req.session.userID
+        userID: req.params.id,
+        habits: foundHabits
       });
 
   } catch(err) {
@@ -170,6 +175,7 @@ router.get('/:id', async(req, res) => {
 
 //Delete route await-async
 router.delete('/:id', async(req, res) => {
+  console.log("delete user");
   try {
     //find user and delete
     //delete habits and activities associated with user
