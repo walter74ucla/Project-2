@@ -102,6 +102,7 @@ router.get('/logout', (req, res) => {
 
 });
 
+
 //Index route async-await
 router.get('/', async(req, res) => {
   try {
@@ -110,6 +111,30 @@ router.get('/', async(req, res) => {
       users: allUsers
     });
 
+  } catch(err) {
+    res.send(err);
+  }
+});
+
+
+//Edit route async-await
+router.get('/:id/edit', async(req, res) => {
+  try {
+    const foundUser = await User.findById(req.params.id);
+      res.render('users/edit.ejs', {
+        user: foundUser
+      })  
+  } catch(err) {
+    res.send(err);
+  }
+});
+
+
+//Put route async-await
+router.put('/:id', async(req,res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    res.redirect('/users/' + req.params.id)
   } catch(err) {
     res.send(err);
   }
