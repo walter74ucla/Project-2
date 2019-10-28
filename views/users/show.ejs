@@ -1,9 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ./partials/head %>
+    <% include ../partials/head %>
 </head>
 <body>
-    <h1>SHOW USER</h1>
+    <% include ../partials/header %>
+    <main>
+        <section class="user-habits">
+            
+        </section>
+        <section class="add-activity">
+            <form method="POST" action="/activities/<%#=user._id%>">
+                Date: <input type="text" name="date-day" value="">
+                      <input type="text" name="date-month" value="">
+                      <input type="text" name="date-year" value="">
+                </br>
+                Time (minutes): <input type="text" name="time" value=""></br>
+                <select name="authorId">
+                    <%# for(let i = 0; i < habits.length; i++) { %>
+                        <option value="<%#=habits[i]._id%>"><%#=habits[i].name%></option>
+                    <%# } %>
+                </select><br/>
+                <button type="submit">SUBMIT</button>
+            </form>
+        </section>
+        <section>
+            Recent habits
+        </section>
+    </main>
 </body>
 </html>

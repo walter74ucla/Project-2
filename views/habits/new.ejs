@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body>
+    <% include ../partials/header %>
+    <main>
+            <h1>ADD NEW HABIT</h1>
+            <section>
+                <form action="/habits/new" method="POST">
+                    <input type="text" name="name" placeholder=""><br>
+                    <input type="text" name="type" placeholder=""><br>
+                    <input type="text" name="icon" placeholder=""><br>
+                    <button type="submit">Add Habit</button>
+                </form>
+                <form method='GET' action='/habits' >
+                    <button type='submit'>back</button>
+                </form>
+            </section>
+    </main>
+</body>
+</html>

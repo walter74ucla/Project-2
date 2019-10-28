@@ -1,3 +1,37 @@
 body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
     background: lightblue;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+header{
+    width: 100%;
+    height: 10vh;
+    color:coral;
+    display: inline-flex;
+    line-height: 10vh;
+    border-bottom: 1px solid coral;
+    padding-left: 20px;
+}
+
+.header-full{
+    color:coral;
+    width: 100%;
+    text-align: center;
+    font-size: 10vh;
+}
+
+.list{
+    margin: 5% 15%;
+    width: 90%;
+    border: 3px solid dimgray;
+    background: rgb(228, 243, 250);
+}
+
+.index-user-list{
+    height: 50vh;
+    width: 70%;
 }

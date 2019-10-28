@@ -4,6 +4,33 @@
     <% include ./partials/head %>
 </head>
 <body>
-    <h1>HOME</h1>
+    <main>
+        <section class="header-full">
+            <h1>habit</h1>
+        </section>
+        <section>
+            <h4>Login</h4>
+            <form action="/users/login" method="POST">
+                <input type="text" name="username" placeholder="username"><br>
+                <input type="password" name="password" placeholder="password"><br>
+                <button type="submit">Login</button>
+            </form> 
+            <form action="/users/new" method="POST">
+                <button type="submit">Sign Up</button>
+            </form> 
+        </section>
+        <section>
+            <ul class="list index-user-list">
+                <%#for(let i = 0; i < users.length; i++){%>
+                    <!-- <li>
+                        <a href='/users/<%#=user._id%>'>
+                            <%#=user.username%>
+                            add activity 
+                        </a>
+                    </li> -->
+                <%#}%>
+            </ul>
+        </section>
+    </main>
 </body>
 </html>
