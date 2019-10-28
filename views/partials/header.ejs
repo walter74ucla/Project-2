@@ -2,12 +2,12 @@
     <h1>habit</h1>
     <%if(!loggedIn){%>
         <div>
-            <form action="/users/login" method="POST">
+            <form action="/users/login" method="GET">
                 <input type="text" name="username" placeholder="username">
                 <input type="password" name="password" placeholder="password">
                 <button type="submit">Login</button>
             </form>
-            <form action="/users/new" method="POST">
+            <form action="/users/new" method="GET">
                 <button type="submit">Register</button>
             </form>
         </div>

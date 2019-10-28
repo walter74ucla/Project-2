@@ -3,15 +3,18 @@ const router = express.Router();
 const User   = require('../models/user');
 const bcrypt = require('bcryptjs');
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   console.log("log-in route");
   // find if the user exists
-  try {                         
+  try {
+    console.log(req.body);                         
     const foundUser = await User.findOne({username: req.body.username});
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
+      console.log("user found");
         // compare their passwords
         if(bcrypt.compareSync(req.body.password, foundUser.password)){
+          console.log("password matches");
           // if true let's log them in
           // start our session
           req.session.message = '';
@@ -20,18 +23,19 @@ router.get('/login', async (req, res) => {
           req.session.username = foundUser.username;
           req.session.logged   = true;
 
-          res.redirect('users/show.ejs');//User My page-->show page??
+          res.redirect('/users/'+foundUser._id);//User My page-->show page
 
         } else {
+          console.log("wrong password");
             // if the passwords don't match
            req.session.message = 'Username or password is incorrect';
            res.redirect('/');// home page??
         }
 
     } else {
-
+      console.log("user not found");
       req.session.message = 'Username or password is incorrect';
-      res.redirect('/');// home page??
+      res.redirect('/');//User My page-->show page
       // / is where the form is
 
     }
@@ -60,6 +64,7 @@ router.post('/registration', async (req, res) => {
     const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     // check to see if the username already exists
     const foundUser = await User.findOne({username: req.body.username});
+    console.log(foundUser);
     // if username already exists, message: please create a different username
     if(foundUser){
       req.session.message = 'Username already exists.  Please try again.';
@@ -99,18 +104,20 @@ router.get('/logout', (req, res) => {
       res.redirect('/');
     }
   })
-
 });
 
 
 //Index route async-await
 router.get('/', async(req, res) => {
+  console.log("user index route");
   try {
     const allUsers = await User.find({});
     res.render('users/index.ejs', {
-      users: allUsers
+      users: allUsers,
+      loggedIn: req.session.logged,
+      username: req.session.username,
+      userID: req.session.userID
     });
-
   } catch(err) {
     res.send(err);
   }
