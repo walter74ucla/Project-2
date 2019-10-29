@@ -1,0 +1,39 @@
+Route Check one two, one two...
+
+Home route displays.
+
+user abc123 login route worked, landed on user show page.
+
+Update??? No Logout button on user show page.  Perhaps, add a logout button in the header.ejs
+
+Update??? The View All Habits icon on the home page, links to the Users Index Page.
+
+The View All Users icon on the home page link worked, landed on user index page.
+
+Update??? While logged in as user abc123, the fa-user button in header.ejs displays the user index on click.  Shouldn't it go to the abc123 show page?
+
+Update??? While logged in as user abc123, the fa-edit button in header.ejs displays JSON CastError on click.
+
+On the user show page, clicking on the fa-user icon worked, landed on current show page.
+
+On the user show page, clicking on the fa-edit icon worked, landed on edit user page. (my version is missing the email update square)
+
+Sign Up button worked from the homepage.
+
+The Register button worked from the registration page, and landed on the user show page.
+
+The add activity Submit button did not throw an error upon click.  The X shows up in recenty activity.  Update??? The day and month are off, but the year is correct in the pre-populated form.
+
+The add habit Submit button worked, landed on the habit index page.
+
+On the habit index page, clicking on the fa-user icon worked, landed on current show page.
+
+On the habit index page, clicking on the fa-edit icon worked, landed on edit user page. (my version is missing the email update square)
+
+On the edit user page, clicking Delete Profile caused a throw er; // Unhandled 'error' event...controllers/users.js:224:17
+
+Login check worked, "Username or password in incorrect" when using credentials not found in database.
+
+
+
+

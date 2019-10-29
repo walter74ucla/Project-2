@@ -1,0 +1,45 @@
+Icon List
+Types:  exercise, art, relaxation, education, other
+
+yoga type: exercise fa-spa
+biking type: exercise fa-biking
+hiking type: exercise fa-hiking
+running type: exercise fa-running
+ice skating type: exercise fa-skating
+skiing: type: exercise fa-skiing
+snowboarding type: exercise fa-snowboarding
+swimming type: exercise fa-swimmer
+walking type: exercise fa-walking
+weightlifting type: exercise fa-dumbbell
+
+drum type: art fa-drum
+guitar type: art fa-guitar
+music type: art fa-music
+painting type: art fa-palette
+museum type: art fa-landmark
+theater type: art fa-theater-masks
+
+drinking relaxation fa-glass-cheers
+volunteer relaxation fa-hands-helping
+meditation relaxation fa-brain or fa-sun
+shopping relaxation fa-shopping-bag
+tv relaxation fa-tv
+movies relaxation fa-film
+hot tub relaxation fa-hot-tub
+
+reading type: education fa-book-open
+school type: education fa-school
+coding type: education fa-laptop-code
+whiteboard: education	fa-chalkboard
+
+
+"Other" Icon Possibilities
+other fa-otter
+other fa-toilet-paper
+other fa-circle
+other fa-lightbulb
+other fa-cookie
+other fa-globe-americas
+other fa-infinity
+
+
