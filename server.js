@@ -31,10 +31,14 @@ app.use('/users', usersController);
 const habitsController = require('./controllers/habits.js');
 app.use('/habits', habitsController);
 
+const activitiesController = require('./controllers/activities.js');
+app.use('/activities', activitiesController);
 
 //Home route
 app.get('/',(req,res)=>{
-    res.render('home.ejs');
+    res.render('home.ejs', {
+        message: req.session.message
+    });
 })
     
 

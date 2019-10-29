@@ -27,25 +27,27 @@ router.get('/new', (req, res) => {
 	res.render('/activities/new.ejs');
 });
 
-//Post route async-await
-router.post('/', async(req, res) => {
+//create route async-await
+router.post('/:id', async(req, res) => {
+  console.log("hitting create activity route");
+  console.log(req.body);
   try {
     // create activity
     const newActivity = await Activity.create(req.body);
+    console.log(newActivity);
     // find user by id (req.body.userId)
-    const foundUser = await User.findById(req.body.userId);
+    const foundUser = await User.findById(req.params.id);
     // push newly created activity into foundUser.activities array
     foundUser.activities.push(newActivity);
     // save foundUser
     foundUser.save();
     // console.log('foundUser: ', foundUser);
     // res.redirect to index route
-    res.redirect('/activities');
+    res.redirect('/users/'+req.params.id);
 
   } catch(err) {
     res.send(err);
   }
-
 });
 
 
@@ -93,26 +95,28 @@ router.get('/:id', async(req,res) => {
 	                                )
 	                                .exec();
 	    // render activities view and inject data
-	    res.render('/activities/show.ejs', {//Or User My page-->show page??
+	    res.render('/activities/show.ejs', {
 	      user: foundUser,
-	      activity: foundUser.activities[0]
 	    });
 	
 	} catch (err) {
 		res.send(err);
 	}
-
 });
 
 
 //Delete route await-async
 //Does this need to be tied to a specific user?
-router.delete('/:id', async(req, res) => {
+router.delete('/:id/:index', async(req, res) => {
+  console.log("delete activity route");
   // find the activity and delete it
   try {
     const deletedActivity = await Activity.findByIdAndRemove(req.params.id);
+    const foundUser = await User.findById(req.params.id);
+    foundUser.activities.splice(req.params.index,1);
+    foundUser.save();
         // redirect to activities index    
-        res.redirect('/activities');
+    res.redirect('/users/'+req.params.id);
   
   } catch(err) {
     res.send(err);

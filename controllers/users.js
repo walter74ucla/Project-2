@@ -10,7 +10,9 @@ router.post('/login', async (req, res) => {
   // find if the user exists
   try {
     console.log(req.body);                         
-    const foundUser = await User.findOne({username: req.body.username});
+    const foundUser = await User.findOne({username: req.body.username})
+                                .populate({path:'activities'});
+
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
       console.log("user found");
@@ -87,8 +89,9 @@ router.post('/registration', async (req, res) => {
       req.session.username = createdUser.username;
       req.session.userID = createdUser._id;
       req.session.logged = true;
+      req.session.message = '';
 
-      res.redirect('/'+createdUser._id);//User My page-->show page
+      res.redirect('/users/'+createdUser._id);//User My page-->show page
     }
   } catch(err) {
     res.send(err);
@@ -128,10 +131,14 @@ router.get('/', async(req, res) => {
 
 //Edit route async-await
 router.get('/:id/edit', async(req, res) => {
+  console.log("hitting edit route");
   try {
     const foundUser = await User.findById(req.params.id);
       res.render('users/edit.ejs', {
-        user: foundUser
+        user: foundUser,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID
       })  
   } catch(err) {
     res.send(err);
@@ -139,9 +146,11 @@ router.get('/:id/edit', async(req, res) => {
 });
 
 
-//Put route async-await
+//Update route async-await
 router.put('/:id', async(req,res) => {
+  console.log("hitting update route");
   try {
+    req.body.visible = req.params.visible === "on" ? true : false;
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/users/' + req.params.id)
   } catch(err) {
@@ -153,11 +162,28 @@ router.put('/:id', async(req,res) => {
 //Show route async-await
 router.get('/:id', async(req, res) => {
   console.log("hitting show route");
-  console.log(req.session);
   try {
     const foundUser = await User.findById(req.params.id)
-                                .populate({path: 'habits'})//Do we need to add activities here??
+                                .populate({
+                                  path: 'activities',
+                                  // populate: { path: 'habits', 
+                                  //             //match: { _id: activityIds},
+                                  //           } 
+                                })
+                                .populate({
+                                  path: 'habits',
+                                })
                                 .exec();
+    //temp until we get populate working
+    //foundUser.activities.populate({path: "habits"})
+    // for(let i = 0; i < foundUser.activities.length; i++){
+    //     console.log(foundUser.activities[i]);
+    //     const habitId =foundUser.activities[0]['habitId'];
+    //     const foundHabit = await Habit.findById(habitId);
+    //     console.log(foundHabit);
+    //     foundUser.activities.push(foundHabit);
+    // }
+    //foundUser.save();
     const foundHabits = await Habit.find({});
     res.render('users/show.ejs', {
         user: foundUser,
