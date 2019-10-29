@@ -102,7 +102,6 @@ router.get('/:id', async(req,res) => {
 	} catch (err) {
 		res.send(err);
 	}
-
 });
 
 

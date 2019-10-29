@@ -162,11 +162,28 @@ router.put('/:id', async(req,res) => {
 //Show route async-await
 router.get('/:id', async(req, res) => {
   console.log("hitting show route");
-  console.log(req.session);
   try {
     const foundUser = await User.findById(req.params.id)
-                                .populate({path: 'habits'})//Do we need to add activities here??
+                                .populate({
+                                  path: 'activities',
+                                  // populate: { path: 'habits', 
+                                  //             //match: { _id: activityIds},
+                                  //           } 
+                                })//Do we need to add activities here??
+                                .populate({
+                                  path: 'habits',
+                                })
                                 .exec();
+    //temp until we get populate working
+    foundUser.activities.populate({path: "habits"})
+    // for(let i = 0; i < foundUser.activities.length; i++){
+    //     console.log(foundUser.activities[i]);
+    //     const habitId =foundUser.activities[0]['habitId'];
+    //     const foundHabit = await Habit.findById(habitId);
+    //     console.log(foundHabit);
+    //     foundUser.activities.push(foundHabit);
+    // }
+    foundUser.save();
     const foundHabits = await Habit.find({});
     res.render('users/show.ejs', {
         user: foundUser,
