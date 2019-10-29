@@ -143,9 +143,11 @@ router.get('/:id/edit', async(req, res) => {
 });
 
 
-//Put route async-await
+//Update route async-await
 router.put('/:id', async(req,res) => {
+  console.log("hitting update route");
   try {
+    req.body.visible = req.params.visible === "on" ? true : false;
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/users/' + req.params.id)
   } catch(err) {

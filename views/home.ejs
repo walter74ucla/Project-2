@@ -16,16 +16,18 @@
                 all users
             </a>
         </section>
-        <section>
-            <h4>Login</h4>
-            <form action="/users/login" method="POST">
-                <input type="text" name="username" placeholder=""><br>
-                <input type="password" name="password" placeholder=""><br>
-                <button type="submit">Login</button>
-            </form> 
-            <form action="/users/new" method="GET">
-                <button type="submit">Sign Up</button>
-            </form> 
+        <section class="login login-full">
+            <div class="login-window">
+                <h4>Login</h4>
+                <form action="/users/login" method="POST">
+                    <input type="text" name="username" placeholder=""><br>
+                    <input type="password" name="password" placeholder=""><br>
+                    <button type="submit">Login</button>
+                </form> 
+                <form action="/users/new" method="GET">
+                    <button type="submit">Sign Up</button>
+                </form> 
+            </div>
         </section>
         <section>
             <ul class="list index-user-list">

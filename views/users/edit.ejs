@@ -8,10 +8,14 @@
     <main>
             <h1>EDIT USER PROFILE</h1>
             <section>
-                <form method="POST" action="/users/<%#=user._id%>?_method=PUT">
-                    Username: <input type="text" name="username" value=<%#=user.username%>></br>
-                    Password: <input type="password" name="password" value=<%#=user.password%>></br>
-                    Visible: <input type="checkbox" name="visible" value=<%#=user.visible%>></br>
+                <form action="/users/<%=user._id%>?_method=PUT" method="POST">
+                    Username: <input type="text" name="username" value=<%=user.username%>></br>
+                    Password: <input type="password" name="password" value=<%=user.password%>></br>
+                    Visible: <input type="checkbox" name="visible" 
+                        <%if(user.visible){%>
+                            checked
+                        <%}%>
+                    ></br>
                     <button type="submit">SUBMIT</button>
                 </form>
                 <form action="/users/<%=userID%>?_method=DELETE" method="POST">
