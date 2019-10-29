@@ -128,10 +128,14 @@ router.get('/', async(req, res) => {
 
 //Edit route async-await
 router.get('/:id/edit', async(req, res) => {
+  console.log("hitting edit route");
   try {
     const foundUser = await User.findById(req.params.id);
       res.render('users/edit.ejs', {
-        user: foundUser
+        user: foundUser,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID
       })  
   } catch(err) {
     res.send(err);

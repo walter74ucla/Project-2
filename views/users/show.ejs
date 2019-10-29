@@ -6,6 +6,7 @@
 <body>
     <% include ../partials/header %>
     <main>
+        <h2><%=user.username%>'s Habits</h2>
         <section class="user-habits">
             top habits
                 <% for(let i = 0; i < user.habits.length; i++) { %>
@@ -30,7 +31,7 @@
                     Icon: <input type="text" name="icon" value=""><br/>
                     <button type="submit">SUBMIT</button>
                 </form>
-            </section>
+        </section>
         <section class="add-activity">
             <form method="POST" action="/activities/<%#=user._id%>">
                 <select name="habitId">
@@ -49,8 +50,11 @@
         <section>
             Recent habits
         </section>
-        <form action="/users/<%=userID%>?_method=DELETE" method="POST">
-            <button type="submit">Delete Profile</button>
+        <form action="/users/<%=user._id%>/edit" method="GET">
+            <button type="submit">Edit Profile</button>
+        </form>
+        <form method='GET' action='/users/' >
+            <button type='submit'>back</button>
         </form>
     </main>
 </body>

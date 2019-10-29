@@ -8,15 +8,18 @@
     <main>
             <h1>EDIT USER PROFILE</h1>
             <section>
-            <form method="POST" action="/users/<%#=user._id%>?_method=PUT">
-                Username: <input type="text" name="username" value=<%#=user.username%>></br>
-                Password: <input type="password" name="password" value=<%#=user.password%>></br>
-                Visible: <input type="checkbox" name="visible" value=<%#=user.visible%>></br>
-                <button type="submit">SUBMIT</button>
-            </form>
-            <form method='GET' action='/users' >
-                <button type='submit'>back</button>
-            </form>
+                <form method="POST" action="/users/<%#=user._id%>?_method=PUT">
+                    Username: <input type="text" name="username" value=<%#=user.username%>></br>
+                    Password: <input type="password" name="password" value=<%#=user.password%>></br>
+                    Visible: <input type="checkbox" name="visible" value=<%#=user.visible%>></br>
+                    <button type="submit">SUBMIT</button>
+                </form>
+                <form action="/users/<%=userID%>?_method=DELETE" method="POST">
+                    <button type="submit">Delete Profile</button>
+                </form>
+                <form method='GET' action='/users/<%=user._id%>' >
+                    <button type='submit'>back</button>
+                </form>
             </section>
     </main>
 </body>
