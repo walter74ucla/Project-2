@@ -36,7 +36,9 @@ app.use('/activities', activitiesController);
 
 //Home route
 app.get('/',(req,res)=>{
-    res.render('home.ejs');
+    res.render('home.ejs', {
+        message: req.session.message
+    });
 })
     
 

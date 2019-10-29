@@ -40,16 +40,20 @@
                         </section>
                     <section class="add-habit">
                             <form method="POST" action="/habits/<%=userID%>">
-                                <select name="habitId">
+                                <select name="habitID">
                                     <% for(let i = 0; i < habits.length; i++) { %>
                                         <option value="<%=habits[i]._id%>"><%=habits[i].name%></option>
                                     <% } %>
-                                </select><br/>
+                                </select>
+                                <br/>
                                 OR:<br/>
                                 Habit name: <input type="text" name="name" value=""><br/>
                                 Type: <input type="text" name="type" value=""><br/>
                                 Icon: <input type="text" name="icon" value=""><br/>
                                 <button type="submit">SUBMIT</button>
+                                <form action="/users/<%=user._id%>/edit" method="GET">
+                                    <button type="submit" class="fa fa-user-edit"></button>
+                                </form>
                             </form>
                     </section>
                     <section class="user-habits">
@@ -66,7 +70,17 @@
             </div>
             <div class="column three-quarter-column">
                 <section>
-                    Recent habits
+                    recent activity
+                    <div class="list-full">
+                            <% for(let i = 0; i < user.activities.length; i++) { %>
+                                    <div value="<%=user.activities[i]._id%>">
+                                        <%=user.activities[i].name%>
+                                        <form action="/activities/<%=userID%>/<%=i%>?_method=DELETE" method="POST">
+                                            <button type="submit">X</button>
+                                        </form>
+                                    </div>
+                            <% } %>
+                    </div>
                 </section>
             </div>
         </div>

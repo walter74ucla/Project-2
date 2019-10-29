@@ -12,6 +12,9 @@
             <section class="no-padding no-margin inline-flex flex-center">
                 <div class="login-window">
                     <h4>Login</h4>
+                    <%if(message){%>
+                        <p><%=message%></p>
+                        <%}%>
                     <form action="/users/login" method="POST">
                         <input type="text" name="username" placeholder=""><br>
                         <input type="password" name="password" placeholder=""><br>

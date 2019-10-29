@@ -10,7 +10,9 @@ router.post('/login', async (req, res) => {
   // find if the user exists
   try {
     console.log(req.body);                         
-    const foundUser = await User.findOne({username: req.body.username});
+    const foundUser = await User.findOne({username: req.body.username})
+                                .populate({path:'activities'});
+
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
       console.log("user found");
@@ -87,6 +89,7 @@ router.post('/registration', async (req, res) => {
       req.session.username = createdUser.username;
       req.session.userID = createdUser._id;
       req.session.logged = true;
+      req.session.message = '';
 
       res.redirect('/users/'+createdUser._id);//User My page-->show page
     }
