@@ -5,16 +5,22 @@
 </head>
 <body>
     <% include ../partials/header %>
+    <form method='GET' action='/' >
+        <button type='submit' class="back-button fa fa-arrow-left"></button>
+    </form>
     <h1>USERS INDEX</h1>
     <ul>
     <%for(let i = 0; i < users.length; i++){%>
         <li>
             <a href="/users/<%=users[i]._id%>">
                 <%=users[i].username%>
+                <!--ADMIN ONLY-->
+                <form action="/users/<%=users[i]._id%>?_method=DELETE" method="POST">
+                    <button type="submit">X</button>
+                </form>
             </a>
         </li>
     <%}%>
     </ul>
-    <a href="/">back</a>
 </body>
 </html>
