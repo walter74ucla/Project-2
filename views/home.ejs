@@ -8,27 +8,35 @@
         <section class="header-full">
             <h1>habit</h1>
         </section>
-        <section>
-            <a href="/habits/">
-                all habits
-            </a>
-            <a href="/users/">
-                all users
-            </a>
-        </section>
-        <section class="login login-full">
-            <div class="login-window">
-                <h4>Login</h4>
-                <form action="/users/login" method="POST">
-                    <input type="text" name="username" placeholder=""><br>
-                    <input type="password" name="password" placeholder=""><br>
-                    <button type="submit">Login</button>
-                </form> 
-                <form action="/users/new" method="GET">
-                    <button type="submit">Sign Up</button>
-                </form> 
-            </div>
-        </section>
+        <div class="inline-flex">
+            <section class="no-padding no-margin inline-flex flex-center">
+                <div class="login-window">
+                    <h4>Login</h4>
+                    <form action="/users/login" method="POST">
+                        <input type="text" name="username" placeholder=""><br>
+                        <input type="password" name="password" placeholder=""><br>
+                        <button type="submit">Login</button>
+                    </form> 
+                    <form action="/users/new" method="GET">
+                        <button type="submit">Sign Up</button>
+                    </form> 
+                </div>
+            </section>
+            <section class="no-padding no-margin inline-flex flex-center">
+                    <div class="big-button">
+                            View All Habits:
+                            <form action="/users/" method="GET">
+                                <button type="submit" class="fa fa-icons"></button>
+                            </form>
+                    </div>
+                    <div class="big-button">
+                            View All Users:
+                            <form action="/users/" method="GET">
+                                <button type="submit" class="fa fa-users-cog"></button>
+                            </form> 
+                    </div>
+            </section>
+        </div>
         <section>
             <ul class="list index-user-list">
                 <%#for(let i = 0; i < users.length; i++){%>

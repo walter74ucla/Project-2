@@ -88,7 +88,7 @@ router.post('/registration', async (req, res) => {
       req.session.userID = createdUser._id;
       req.session.logged = true;
 
-      res.redirect('/'+createdUser._id);//User My page-->show page
+      res.redirect('/users/'+createdUser._id);//User My page-->show page
     }
   } catch(err) {
     res.send(err);

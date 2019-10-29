@@ -27,8 +27,9 @@ router.get('/new', (req, res) => {
 	res.render('/activities/new.ejs');
 });
 
-//Post route async-await
-router.post('/', async(req, res) => {
+//Create route async-await
+router.post('/:id', async(req, res) => {
+  console.log("hitting create activity route");
   try {
     // create activity
     const newActivity = await Activity.create(req.body);
