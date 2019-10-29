@@ -169,13 +169,13 @@ router.get('/:id', async(req, res) => {
                                   // populate: { path: 'habits', 
                                   //             //match: { _id: activityIds},
                                   //           } 
-                                })//Do we need to add activities here??
+                                })
                                 .populate({
                                   path: 'habits',
                                 })
                                 .exec();
     //temp until we get populate working
-    foundUser.activities.populate({path: "habits"})
+    //foundUser.activities.populate({path: "habits"})
     // for(let i = 0; i < foundUser.activities.length; i++){
     //     console.log(foundUser.activities[i]);
     //     const habitId =foundUser.activities[0]['habitId'];
@@ -183,7 +183,7 @@ router.get('/:id', async(req, res) => {
     //     console.log(foundHabit);
     //     foundUser.activities.push(foundHabit);
     // }
-    foundUser.save();
+    //foundUser.save();
     const foundHabits = await Habit.find({});
     res.render('users/show.ejs', {
         user: foundUser,
