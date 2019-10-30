@@ -65,7 +65,9 @@ form{
     margin: 0 2vw;
     padding: 2vw;
     position: fixed;
-    background: rgba(50,50,50,.5);
+    background: rgba(50,50,50,.3);
+    border: .5px solid black;
+    border-radius: 100%;
 }
 
 .header-full{
@@ -77,6 +79,7 @@ form{
 
 .login-window{
     border: 2px solid dimgray;
+    background:rgba(255,255,255,.5);
     padding: 2vw;
     border-radius: 2vw;
 }

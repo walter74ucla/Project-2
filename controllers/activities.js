@@ -44,6 +44,11 @@ router.post('/:id', async(req, res) => {
     const foundUser = await User.findById(req.params.id);
     // push newly created activity into foundUser.activities array
     foundUser.activities.push(newActivity);
+    //search for habit id in user habits array; if not found, add to array
+    if(!foundUser.habits.includes(req.body.habitId)){
+      console.log("habit not in array!");
+      
+    }
     // save foundUser
     foundUser.save();
     // res.redirect to users page
