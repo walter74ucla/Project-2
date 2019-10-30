@@ -61,14 +61,14 @@ router.get('/new', (req,res) => {
 
 //register user
 router.post('/registration', async (req, res) => {
-  console.log("hitting registration")
+  console.log("hitting registration");
   try {
     // first thing to do is hash the password
     const password = req.body.password; // the password from the form
     const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     // check to see if the username already exists
     const foundUser = await User.findOne({username: req.body.username});
-    console.log(foundUser);
+    console.log('foundUser', foundUser);
     // if username already exists, message: please create a different username
     if(foundUser){
       req.session.message = 'Username already exists.  Please try again.';
@@ -85,7 +85,7 @@ router.post('/registration', async (req, res) => {
 
       // added the user to the db
       const createdUser = await User.create(userDbEntry);
-      console.log(createdUser);
+      console.log('createdUser', createdUser);
       req.session.username = createdUser.username;
       req.session.userID = createdUser._id;
       req.session.logged = true;
@@ -174,6 +174,8 @@ router.get('/:id', async(req, res) => {
     }
     console.log('found user show route', foundUser);
     const foundHabits = await Habit.find({});
+    console.log('foundUser', foundUser);
+    console.log('foundHabits', foundHabits);
     res.render('users/show.ejs', {
         user: foundUser,
         loggedIn: req.session.logged,
