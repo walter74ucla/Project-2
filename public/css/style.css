@@ -61,6 +61,13 @@ form{
     padding: 0;
 }
 
+.back-button{
+    margin: 0 2vw;
+    padding: 2vw;
+    position: fixed;
+    background: rgba(50,50,50,.5);
+}
+
 .header-full{
     color:coral;
     width: 100%;

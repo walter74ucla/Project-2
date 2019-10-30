@@ -102,6 +102,7 @@ router.post('/registration', async (req, res) => {
 router.get('/logout', (req, res) => {
   // creates a brand new cookie, without any of our properties
   // that we previously added to it
+  console.log("hitting logout route");
   req.session.destroy((err) => {
     if(err){
       res.send(err);
