@@ -10,7 +10,7 @@
             <section>
                 <form action="/users/<%=user._id%>?_method=PUT" method="POST">
                     Username: <input type="text" name="username" value=<%=user.username%>></br>
-                    Password: <input type="password" name="password" value=<%=user.password%>></br>
+                    Change Password: <input type="password" name="password" value=""></br>
                     Email: <input type="email" name="email" value=<%=user.email%>></br>
                     Visible: <input type="checkbox" name="visible" 
                         <%if(user.visible){%>

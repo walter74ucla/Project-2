@@ -10,8 +10,8 @@ router.post('/login', async (req, res) => {
   // find if the user exists
   try {
     console.log(req.body);                         
-    const foundUser = await User.findOne({username: req.body.username})
-                                .populate({path:'activities'});
+    const foundUser = await User.findOne({username: req.body.username});
+                                
 
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
@@ -80,7 +80,7 @@ router.post('/registration', async (req, res) => {
       ///and our hashed password not the password from the form
       userDbEntry.username = req.body.username;
       userDbEntry.password = passwordHash;
-      userDbEntry.email    = req.body.email;
+      userDbEntry.email = req.body.email;
       userDbEntry.visible = req.body.visible === "on" ? true : false;
 
       // added the user to the db
@@ -112,7 +112,7 @@ router.get('/logout', (req, res) => {
 });
 
 
-//Edit route async-await
+//Edit user route async-await
 router.get('/:id/edit', async(req, res) => {
   console.log("hitting edit route");
   try {
@@ -133,6 +133,11 @@ router.get('/:id/edit', async(req, res) => {
 router.put('/:id', async(req,res) => {
   console.log("hitting update route");
   try {
+    if(req.body.password !== ""){
+      const password = req.body.password; // the password from the form
+      const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+      req.body.password = passwordHash;
+    }
     req.body.visible = req.params.visible === "on" ? true : false;
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/users/' + req.params.id)

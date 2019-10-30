@@ -32,17 +32,21 @@ router.post('/:id', async(req, res) => {
   console.log("hitting create activity route");
   console.log(req.body);
   try {
-    // create activity
-    const newActivity = await Activity.create(req.body);
-    console.log(newActivity);
+    // create activity object with formatted date
+    const loadObj = {
+      date: req.body.month + "-" + req.body.day + "-" + req.body.year,
+      time: req.body.time,
+      habitId: req.body.habitId,
+      likes: 0
+    }
+    const newActivity = await Activity.create(loadObj);
     // find user by id (req.body.userId)
     const foundUser = await User.findById(req.params.id);
     // push newly created activity into foundUser.activities array
     foundUser.activities.push(newActivity);
     // save foundUser
     foundUser.save();
-    //console.log('foundUser: ', foundUser);
-    // res.redirect to index route
+    // res.redirect to users page
     res.redirect('/users/'+req.params.id);
 
   } catch(err) {
@@ -53,7 +57,7 @@ router.post('/:id', async(req, res) => {
 
 //Edit route async-await
 //Does this route need to be tied to a specific user?
-router.get('/:id/edit', async(req, res) => {
+router.get('/:userid/:activityid/:activityIndex/edit', async(req, res) => {
   try {
     const foundActivity = await Activity.findById(req.params.id);
       res.render('activities/edit.ejs', {
