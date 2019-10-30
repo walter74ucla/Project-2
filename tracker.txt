@@ -4,31 +4,72 @@ Home route displays.
 
 user abc123 login route worked, landed on user show page.
 
-Update??? No Logout button on user show page.  Perhaps, add a logout button in the header.ejs
+Update??? No Logout button on user show page.  Perhaps, add a logout button in the header.ejs...
+DONE.
+Logout button worked, and landed on the home page.
 
-Update??? The View All Habits icon on the home page, links to the Users Index Page.
+Update??? The View All Habits icon on the home page, links to the Users Index Page...
+DONE.
+-->goes to the habits index page (while logged out).
+
+Update??? While logged in, the user's habits index page submit new habit button yields a "Cannot POST /habits/"
+
+Update??? While logged in, the user's habits index page fa-edit button in header.ejs displays JSON CastError on click.
 
 The View All Users icon on the home page link worked, landed on user index page.
 
-Update??? While logged in as user abc123, the fa-user button in header.ejs displays the user index on click.  Shouldn't it go to the abc123 show page?
+Update??? While logged in as user abc123, the fa-user button in header.ejs displays the user index on click.  Shouldn't it go to the abc123 show page?...
+DONE.
+-->lands on the user show page
 
-Update??? While logged in as user abc123, the fa-edit button in header.ejs displays JSON CastError on click.
+Update??? While logged in as user abc123, the fa-edit button in header.ejs displays JSON CastError on click...
+DONE.
+-->lands on user edit page
 
 On the user show page, clicking on the fa-user icon worked, landed on current show page.
 
-On the user show page, clicking on the fa-edit icon worked, landed on edit user page. (my version is missing the email update square)
+On the user show page, clicking on the fa-edit icon worked, landed on edit user page. (my version is missing the email update square)...
+DONE.
 
 Sign Up button worked from the homepage.
 
 The Register button worked from the registration page, and landed on the user show page.
 
-The add activity Submit button did not throw an error upon click.  The X shows up in recenty activity.  Update??? The day and month are off, but the year is correct in the pre-populated form.
+The add activity Submit button did not throw an error upon click.  The X shows up in recent activity...
+DONE.
+-->new habit and activity shows up in recent activities section 
+
+Update??? The day and month are off, but the year is correct in the pre-populated form...
+DONE...almost
+Update??? day and year work, month is off by 1
 
 The add habit Submit button worked, landed on the habit index page.
 
 On the habit index page, clicking on the fa-user icon worked, landed on current show page.
 
-On the habit index page, clicking on the fa-edit icon worked, landed on edit user page. (my version is missing the email update square)
+On the habit index page, clicking on the fa-edit icon worked, landed on edit user page. (my version is missing the email update square)...Update???...While logged in, the fa-edit button in header.ejs displays JSON CastError on click...
+
+Update???...On the user index page, clicking the X deleted the user and threw this error...
+      "throw er; // Unhandled 'error' event
+      ^
+
+ReferenceError: activities is not defined
+    at /Users/waltersylvester/sei-cranberry-gobblers/Project-2/controllers/users.js:228:17
+    at /Users/waltersylvester/sei-cranberry-gobblers/Project-2/node_modules/mongoose/lib/model.js:4599:16
+    at /Users/waltersylvester/sei-cranberry-gobblers/Project-2/node_modules/mongoose/lib/query.js:4351:12
+    at Immediate._handleDeleteWriteOpResult (/Users/waltersylvester/sei-cranberry-gobblers/Project-2/node_modules/mongoose/lib/queryhelpers.js:329:12)
+    at Immediate.<anonymous> (/Users/waltersylvester/sei-cranberry-gobblers/Project-2/node_modules/mquery/lib/utils.js:116:16)
+    at processImmediate (internal/timers.js:439:21)
+Emitted 'error' event on Function instance at:
+    at /Users/waltersylvester/sei-cranberry-gobblers/Project-2/node_modules/mongoose/lib/model.js:4601:13
+    at /Users/waltersylvester/sei-cranberry-gobblers/Project-2/node_modules/mongoose/lib/query.js:4351:12
+    [... lines matching original stack trace ...]
+    at processImmediate (internal/timers.js:439:21)
+[nodemon] app crashed - waiting for file changes before starting..."
+
+On the user show page, when logged in, the delete button worked on the activity listed in the recent activities section.
+
+Update??? On the user show page, when logged in, the edit button does not work on the activity listed in the recent activities section.  It yields the following error..."Cannot POST /activities/5db797e8348fbf190df52c75/5db9b504e2da2d2dccc64d46/0/edit"
 
 On the edit user page, clicking Delete Profile caused a throw er; // Unhandled 'error' event...controllers/users.js:224:17
 
