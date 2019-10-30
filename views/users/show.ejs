@@ -6,13 +6,12 @@
 <body>
     <% include ../partials/header %>
     <main>
-
         <form method='GET' action='/users/' >
             <button type='submit' class="back-button fa fa-arrow-left"></button>
         </form>
         <h2><%=user.username%>'s Habits</h2>
         <div class="inline-flex">
-            <div class="column quarter-column">
+            <aside class="column quarter-column">
                     <div class="inline-flex center">
                             <form action="/users/<%=user._id%>/edit" method="GET">
                                 <button type="submit" class="fa fa-user-edit"></button>
@@ -31,11 +30,11 @@
                                 <%const year = date.getFullYear()%>
                                 Date: 
                                 </br>
-                                    <input type="text" class="date-field" name="date-day" value="<%=day%>">
-                                      <input type="text" class="date-field" name="date-month" value="<%=month%>">
-                                      <input type="text" class="date-field-long" name="date-year" value="<%=year%>">
+                                    <input type="text" class="date-field" name="day" value="<%=day%>">
+                                    <input type="text" class="date-field" name="month" value="<%=month%>">
+                                    <input type="text" class="date-field-long" name="year" value="<%=year%>">
                                 </br>
-                                Time: <input type="text" name="time" class="date-field-long" value="0">(mins)</br>
+                                Time Spent (mins): <input type="text" name="time" class="date-field-long" value="0"></br>
                                 <button type="submit">SUBMIT</button>
                             </form>
                         </section>
@@ -68,16 +67,31 @@
                                     </div>
                                 <% } %>
                     </section>
-            </div>
+            </aside>
             <div class="column three-quarter-column">
                 <section>
-                    recent activity
+                    recent activities
                     <div class="list-full">
+                        <div class="inline-flex activity-list-headers">
+                            <span></span>
+                            <span>habit</span>
+                            <span>type</span>
+                            <span>time</span>
+                            <span>date</span>
+                        </div>
                             <% for(let i = 0; i < user.activities.length; i++) { %>
-                                    <div value="<%=user.activities[i]._id%>">
-                                        <%=user.activities[i].name%>
-                                        <form action="/activities/<%=userID%>/<%=i%>?_method=DELETE" method="POST">
-                                            <button type="submit">X</button>
+                                    <div class="activity-row">
+                                        <div class="icon icon-small fa fa-<%=user.activities[i].habit[0].icon%>">
+                                            <span><%=user.activities[i].habit[0].name%></span>
+                                        </div>
+                                        <span><%=user.activities[i].habit[0].type%></span>
+                                        <span><%=user.activities[i].time%></span>
+                                        <span><%=user.activities[i].date%></span>
+                                        <form action="/activities/<%=userID%>/<%=user.activities[i]._id%>/<%=i%>/edit" method="POST">
+                                            <button type="submit" class="fa fa-edit"></button>
+                                        </form>
+                                        <form action="/activities/<%=userID%>/<%=user.activities[i]._id%>/<%=i%>?_method=DELETE" method="POST">
+                                            <button type="submit" class="fa fa-trash-alt"></button>
                                         </form>
                                     </div>
                             <% } %>

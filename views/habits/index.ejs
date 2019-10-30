@@ -18,9 +18,12 @@
     <section>
             <ul>
                 <%for(let i = 0; i < habits.length; i++){%>
-                    <li>
+                    <li class="row">
                         <%=habits[i].name%>
-                        <form action="/habits/<%=habits[i]._id%>?_method=DELETE" method="POST">
+                        <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>" method="GET">
+                            <button type="submit">edit</button>
+                        </form>
+                        <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
                             <button type="submit">X</button>
                         </form>
                     </li>

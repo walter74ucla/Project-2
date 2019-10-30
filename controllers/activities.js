@@ -32,17 +32,26 @@ router.post('/:id', async(req, res) => {
   console.log("hitting create activity route");
   console.log(req.body);
   try {
-    // create activity
-    const newActivity = await Activity.create(req.body);
-    console.log(newActivity);
+    // create activity object with formatted date
+    const loadObj = {
+      date: req.body.month + "-" + req.body.day + "-" + req.body.year,
+      time: req.body.time,
+      habitId: req.body.habitId,
+      likes: 0
+    }
+    const newActivity = await Activity.create(loadObj);
     // find user by id (req.body.userId)
     const foundUser = await User.findById(req.params.id);
     // push newly created activity into foundUser.activities array
     foundUser.activities.push(newActivity);
+    //search for habit id in user habits array; if not found, add to array
+    if(!foundUser.habits.includes(req.body.habitId)){
+      console.log("habit not in array!");
+      
+    }
     // save foundUser
     foundUser.save();
-    // console.log('foundUser: ', foundUser);
-    // res.redirect to index route
+    // res.redirect to users page
     res.redirect('/users/'+req.params.id);
 
   } catch(err) {
@@ -53,17 +62,15 @@ router.post('/:id', async(req, res) => {
 
 //Edit route async-await
 //Does this route need to be tied to a specific user?
-router.get('/:id/edit', async(req, res) => {
+router.get('/:userid/:activityid/:activityIndex/edit', async(req, res) => {
   try {
     const foundActivity = await Activity.findById(req.params.id);
       res.render('activities/edit.ejs', {
         activity: foundActivity
       }) 
-
   } catch(err) {
     res.send(err);
   }
-
 });
 
 
@@ -106,22 +113,22 @@ router.get('/:id', async(req,res) => {
 
 
 //Delete route await-async
-//Does this need to be tied to a specific user?
-router.delete('/:id/:index', async(req, res) => {
+router.delete('/:userid/:id/:index', async(req, res) => {
   console.log("delete activity route");
   // find the activity and delete it
   try {
+    
     const deletedActivity = await Activity.findByIdAndRemove(req.params.id);
-    const foundUser = await User.findById(req.params.id);
+    console.log(deletedActivity);
+    console.log(req.params.userid);
+    const foundUser = await User.findById(req.params.userid);
     foundUser.activities.splice(req.params.index,1);
     foundUser.save();
         // redirect to activities index    
-    res.redirect('/users/'+req.params.id);
-  
+    res.redirect('/users/'+req.params.userid);
   } catch(err) {
     res.send(err);
   }
-
 });
 
 

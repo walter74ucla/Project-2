@@ -130,15 +130,18 @@ router.delete('/:id/:index', async(req, res) => {
 });
 
 //Delete habit from DB
-router.delete('/:id/', async(req, res) => {
+router.delete('/:userId/:habitId/:habitIndex', async(req, res) => {
   // find the habit and delete it
   console.log("hitting habit delete route");
   try {
     //must delete habit from user array
-    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
+    const deletedHabit = await Habit.findByIdAndRemove(req.params.habitId);
+    const foundUser = await User.findById(req.params.userId);
+    foundUser.habits.splice(req.params.habitIndex,1);
+
     console.log(deletedHabit);
         // redirect to users index   
-    res.redirect('/habits/');
+    res.redirect('/users/'+req.params.userId);
   } catch(err) {
     res.send(err);
   }

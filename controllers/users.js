@@ -10,8 +10,8 @@ router.post('/login', async (req, res) => {
   // find if the user exists
   try {
     console.log(req.body);                         
-    const foundUser = await User.findOne({username: req.body.username})
-                                .populate({path:'activities'});
+    const foundUser = await User.findOne({username: req.body.username});
+                                
 
     // if User.findOne returns null/ or undefined it won't throw an error
     if(foundUser){
@@ -80,7 +80,7 @@ router.post('/registration', async (req, res) => {
       ///and our hashed password not the password from the form
       userDbEntry.username = req.body.username;
       userDbEntry.password = passwordHash;
-      userDbEntry.email    = req.body.email;
+      userDbEntry.email = req.body.email;
       userDbEntry.visible = req.body.visible === "on" ? true : false;
 
       // added the user to the db
@@ -102,6 +102,7 @@ router.post('/registration', async (req, res) => {
 router.get('/logout', (req, res) => {
   // creates a brand new cookie, without any of our properties
   // that we previously added to it
+  console.log("hitting logout route");
   req.session.destroy((err) => {
     if(err){
       res.send(err);
@@ -112,24 +113,7 @@ router.get('/logout', (req, res) => {
 });
 
 
-//Index route async-await
-router.get('/', async(req, res) => {
-  console.log("user index route");
-  try {
-    const allUsers = await User.find({});
-    res.render('users/index.ejs', {
-      users: allUsers,
-      loggedIn: req.session.logged,
-      username: req.session.username,
-      userID: req.session.userID
-    });
-  } catch(err) {
-    res.send(err);
-  }
-});
-
-
-//Edit route async-await
+//Edit user route async-await
 router.get('/:id/edit', async(req, res) => {
   console.log("hitting edit route");
   try {
@@ -150,6 +134,11 @@ router.get('/:id/edit', async(req, res) => {
 router.put('/:id', async(req,res) => {
   console.log("hitting update route");
   try {
+    if(req.body.password !== ""){
+      const password = req.body.password; // the password from the form
+      const passwordHash = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+      req.body.password = passwordHash;
+    }
     req.body.visible = req.params.visible === "on" ? true : false;
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/users/' + req.params.id)
@@ -164,26 +153,26 @@ router.get('/:id', async(req, res) => {
   console.log("hitting show route");
   try {
     const foundUser = await User.findById(req.params.id)
-                                .populate({
-                                  path: 'activities',
-                                  // populate: { path: 'habits', 
-                                  //             //match: { _id: activityIds},
-                                  //           } 
-                                })
-                                .populate({
-                                  path: 'habits',
-                                })
+                                // .populate({
+                                //   path: 'activities',
+                                //   // populate: { path: 'habits', 
+                                //   //             //match: { _id: activityIds},
+                                //   //           } 
+                                // })
+                                // .populate({
+                                //   path: 'habits',
+                                // })
+                                .populate('activities')
+                                // .populate('activities.habitId')
                                 .exec();
     //temp until we get populate working
-    //foundUser.activities.populate({path: "habits"})
-    // for(let i = 0; i < foundUser.activities.length; i++){
-    //     console.log(foundUser.activities[i]);
-    //     const habitId =foundUser.activities[0]['habitId'];
-    //     const foundHabit = await Habit.findById(habitId);
-    //     console.log(foundHabit);
-    //     foundUser.activities.push(foundHabit);
-    // }
-    //foundUser.save();
+    for(let i = 0; i < foundUser.activities.length; i++){
+        console.log(foundUser.activities[i]);
+        const habitId = foundUser.activities[i]['habitId'];
+        const foundHabit = await Habit.findById(habitId);
+        foundUser.activities[i].habit.push(foundHabit);
+    }
+    console.log('found user show route', foundUser);
     const foundHabits = await Habit.find({});
     console.log('foundUser', foundUser);
     console.log('foundHabits', foundHabits);
@@ -200,6 +189,21 @@ router.get('/:id', async(req, res) => {
   }
 });
 
+//Index route async-await
+router.get('/', async(req, res) => {
+  console.log("user index route");
+  try {
+    const allUsers = await User.find({});
+    res.render('users/index.ejs', {
+      users: allUsers,
+      loggedIn: req.session.logged,
+      username: req.session.username,
+      userID: req.session.userID
+    });
+  } catch(err) {
+    res.send(err);
+  }
+});
 
 //Delete route await-async
 router.delete('/:id', async(req, res) => {
@@ -235,7 +239,6 @@ router.delete('/:id', async(req, res) => {
               )
             }     
         );
-
   } catch(err) {
     res.send(err);
   }

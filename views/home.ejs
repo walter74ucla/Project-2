@@ -25,23 +25,23 @@
                     </form> 
                 </div>
             </section>
-            <section class="no-padding no-margin inline-flex flex-center">
-                    <div class="big-button">
-                            View All Habits:
-                            <form action="/users/" method="GET">
-                                <button type="submit" class="fa fa-icons"></button>
-                            </form>
-                    </div>
-                    <div class="big-button">
-                            View All Users:
-                            <form action="/users/" method="GET">
-                                <button type="submit" class="fa fa-users-cog"></button>
-                            </form> 
-                    </div>
-            </section>
         </div>
         <section>
             <ul class="list index-user-list">
+                    <section class="no-padding no-margin inline-flex flex-center">
+                            <div class="big-button">
+                                    View All Habits:
+                                    <form action="/habits/" method="GET">
+                                        <button type="submit" class="fa fa-icons"></button>
+                                    </form>
+                            </div>
+                            <div class="big-button">
+                                    View All Users:
+                                    <form action="/users/" method="GET">
+                                        <button type="submit" class="fa fa-users-cog"></button>
+                                    </form> 
+                            </div>
+                    </section>
                 <%#for(let i = 0; i < users.length; i++){%>
                     <!-- <li>
                         <a href='/users/<%#=user._id%>'>
@@ -53,5 +53,6 @@
             </ul>
         </section>
     </main>
+    <script src="../public/js/home.js"></script>
 </body>
 </html>
