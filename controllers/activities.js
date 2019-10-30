@@ -41,7 +41,7 @@ router.post('/:id', async(req, res) => {
     foundUser.activities.push(newActivity);
     // save foundUser
     foundUser.save();
-    // console.log('foundUser: ', foundUser);
+    //console.log('foundUser: ', foundUser);
     // res.redirect to index route
     res.redirect('/users/'+req.params.id);
 
@@ -59,11 +59,9 @@ router.get('/:id/edit', async(req, res) => {
       res.render('activities/edit.ejs', {
         activity: foundActivity
       }) 
-
   } catch(err) {
     res.send(err);
   }
-
 });
 
 
@@ -106,22 +104,22 @@ router.get('/:id', async(req,res) => {
 
 
 //Delete route await-async
-//Does this need to be tied to a specific user?
-router.delete('/:id/:index', async(req, res) => {
+router.delete('/:userid/:id/:index', async(req, res) => {
   console.log("delete activity route");
   // find the activity and delete it
   try {
+    
     const deletedActivity = await Activity.findByIdAndRemove(req.params.id);
-    const foundUser = await User.findById(req.params.id);
+    console.log(deletedActivity);
+    console.log(req.params.userid);
+    const foundUser = await User.findById(req.params.userid);
     foundUser.activities.splice(req.params.index,1);
     foundUser.save();
         // redirect to activities index    
-    res.redirect('/users/'+req.params.id);
-  
+    res.redirect('/users/'+req.params.userid);
   } catch(err) {
     res.send(err);
   }
-
 });
 
 

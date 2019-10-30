@@ -6,7 +6,7 @@
 <body>
     <% include ../partials/header %>
     <main>
-        <form method='GET' action='/users/' >
+        <form method='GET' action='/' >
             <button type='submit' class="back-button fa fa-arrow-left"></button>
         </form>
         <h2><%=user.username%>'s Habits</h2>
@@ -31,8 +31,8 @@
                                 Date: 
                                 </br>
                                     <input type="text" class="date-field" name="date-day" value="<%=day%>">
-                                      <input type="text" class="date-field" name="date-month" value="<%=month%>">
-                                      <input type="text" class="date-field-long" name="date-year" value="<%=year%>">
+                                    <input type="text" class="date-field" name="date-month" value="<%=month%>">
+                                    <input type="text" class="date-field-long" name="date-year" value="<%=year%>">
                                 </br>
                                 Time: <input type="text" name="time" class="date-field-long" value="0">(mins)</br>
                                 <button type="submit">SUBMIT</button>
@@ -70,13 +70,15 @@
             </div>
             <div class="column three-quarter-column">
                 <section>
-                    recent activity
+                    recent activities
                     <div class="list-full">
                             <% for(let i = 0; i < user.activities.length; i++) { %>
-                                    <div value="<%=user.activities[i]._id%>">
-                                        <%=user.activities[i].name%>
-                                        <form action="/activities/<%=userID%>/<%=i%>?_method=DELETE" method="POST">
-                                            <button type="submit">X</button>
+                                    <div class="activity-row">
+                                        <div class="icon icon-small fa fa-<%=user.activities[i].habit[0].icon%>"></div>
+                                        <%=user.activities[i].habit[0].name%>
+                                        <%=user.activities[i].habit[0].type%>
+                                        <form action="/activities/<%=userID%>/<%=user.activities[i]._id%>/<%=i%>?_method=DELETE" method="POST">
+                                            <button type="submit" class="fa fa-trash-alt"></button>
                                         </form>
                                     </div>
                             <% } %>

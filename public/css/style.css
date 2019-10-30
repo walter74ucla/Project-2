@@ -83,7 +83,7 @@ form{
 }
 
 .index-user-list{
-    height: 50vh;
+    height: 100vh;
     width: 70%;
 }
 
@@ -94,7 +94,10 @@ form{
 }
 
 .big-button{
-    padding: 1vw 3vw;
+    width: 12vw;
+    height: 7vw;
+    padding: 1vw;
+    margin: 0 1vw;
     background: rgba(88, 235, 210,.2);
     border: 3px solid rgb(88, 235, 210);
     border-radius: 2.5vw;
@@ -102,11 +105,11 @@ form{
 
 .big-button button{
     background:  rgb(88, 235, 210);
-    width: 10vw;
-    height: 10vh;
-    border-radius: 2.5vw;
-    font-size: 8vh;
-    line-height: 10vh;
+    width: 7vw;
+    height: 5vw;
+    border-radius: 1vw;
+    font-size: 4vw;
+    line-height: 4vw;
 }
 
 .date-field{

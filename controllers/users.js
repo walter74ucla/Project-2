@@ -112,23 +112,6 @@ router.get('/logout', (req, res) => {
 });
 
 
-//Index route async-await
-router.get('/', async(req, res) => {
-  console.log("user index route");
-  try {
-    const allUsers = await User.find({});
-    res.render('users/index.ejs', {
-      users: allUsers,
-      loggedIn: req.session.logged,
-      username: req.session.username,
-      userID: req.session.userID
-    });
-  } catch(err) {
-    res.send(err);
-  }
-});
-
-
 //Edit route async-await
 router.get('/:id/edit', async(req, res) => {
   console.log("hitting edit route");
@@ -164,26 +147,26 @@ router.get('/:id', async(req, res) => {
   console.log("hitting show route");
   try {
     const foundUser = await User.findById(req.params.id)
-                                .populate({
-                                  path: 'activities',
-                                  // populate: { path: 'habits', 
-                                  //             //match: { _id: activityIds},
-                                  //           } 
-                                })
-                                .populate({
-                                  path: 'habits',
-                                })
+                                // .populate({
+                                //   path: 'activities',
+                                //   // populate: { path: 'habits', 
+                                //   //             //match: { _id: activityIds},
+                                //   //           } 
+                                // })
+                                // .populate({
+                                //   path: 'habits',
+                                // })
+                                .populate('activities')
+                                // .populate('activities.habitId')
                                 .exec();
     //temp until we get populate working
-    //foundUser.activities.populate({path: "habits"})
-    // for(let i = 0; i < foundUser.activities.length; i++){
-    //     console.log(foundUser.activities[i]);
-    //     const habitId =foundUser.activities[0]['habitId'];
-    //     const foundHabit = await Habit.findById(habitId);
-    //     console.log(foundHabit);
-    //     foundUser.activities.push(foundHabit);
-    // }
-    //foundUser.save();
+    for(let i = 0; i < foundUser.activities.length; i++){
+        console.log(foundUser.activities[i]);
+        const habitId = foundUser.activities[i]['habitId'];
+        const foundHabit = await Habit.findById(habitId);
+        foundUser.activities[i].habit.push(foundHabit);
+    }
+    console.log('found user show route', foundUser);
     const foundHabits = await Habit.find({});
     res.render('users/show.ejs', {
         user: foundUser,
@@ -198,6 +181,21 @@ router.get('/:id', async(req, res) => {
   }
 });
 
+//Index route async-await
+router.get('/', async(req, res) => {
+  console.log("user index route");
+  try {
+    const allUsers = await User.find({});
+    res.render('users/index.ejs', {
+      users: allUsers,
+      loggedIn: req.session.logged,
+      username: req.session.username,
+      userID: req.session.userID
+    });
+  } catch(err) {
+    res.send(err);
+  }
+});
 
 //Delete route await-async
 router.delete('/:id', async(req, res) => {
@@ -233,7 +231,6 @@ router.delete('/:id', async(req, res) => {
               )
             }     
         );
-
   } catch(err) {
     res.send(err);
   }
