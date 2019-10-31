@@ -12,6 +12,7 @@
         <h2><%=user.username%>'s Habits</h2>
         <div class="inline-flex">
             <aside class="column quarter-column">
+                <%if(loggedIn){%>
                     <div class="inline-flex center">
                             <form action="/users/<%=user._id%>/edit" method="GET">
                                 <button type="submit" class="fa fa-user-edit"></button>
@@ -54,8 +55,13 @@
                                 <form action="/users/<%=user._id%>/edit" method="GET">
                                     <button type="submit" class="fa fa-user-edit"></button><--Click here to display your habits
                                 </form>
-                            </form>
-                    </section>
+                        </section>
+                    <%}%>
+                    <%if(!self){%>
+                        <form action="/users/<%=user._id%>/edit" method="GET">
+                            <button type="submit" class="fa fa-heart"></button>
+                        </form>
+                        <%}%>
                     <section class="user-habits">
                             top habits
                                 <% for(let i = 0; i < user.habits.length; i++) { %>
