@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 // mongoose is an odm
-const connectionString = 'mongodb://localhost/habit';
+// const connectionString = 'mongodb://localhost/habit';
 // db name is habit
+const connectionString = process.env.MONGODB_URI;
 
 
 mongoose.connect(connectionString, { useNewUrlParser: true,
