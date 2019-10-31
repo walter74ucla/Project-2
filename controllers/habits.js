@@ -13,12 +13,13 @@ router.get('/', async(req, res) => {
     const allHabits = await Habit.find({});
     console.log(allHabits);
 		// render index.ejs and inject data
+    console.log(req.session, 'habits index');
 		res.render('habits/index.ejs', {
       habits: allHabits,
       loggedIn: req.session.logged,
       username: req.session.username,
       userID: req.session.userID
-		}) 
+		}); 
 	} catch(err) {
 		res.send(err);
   }
@@ -40,6 +41,7 @@ router.post('/:id', async(req, res) => {
   try {
     // create habit
     const newHabit = await Habit.create(req.body);
+    console.log('newHabit', newHabit);
     // find user by id (req.body.userId)
     const foundUser = await User.findById(req.params.id);
     // push newly created habit into foundUser.habits array
@@ -48,7 +50,16 @@ router.post('/:id', async(req, res) => {
     foundUser.save();
     console.log('foundUser: ', foundUser);
     // res.redirect to index route
-    res.redirect('/habits');
+    res.redirect('/habits'
+    //   , {
+    //   user: foundUser,
+    //   loggedIn: req.session.logged,
+    //   username: req.session.username,
+    //   userID: req.params.id,
+    //   habits: foundHabits
+    // }
+    );
+
 
   } catch(err) {
     res.send(err);

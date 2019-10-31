@@ -6,7 +6,8 @@ const activitySchema = new mongoose.Schema({
 	date: String, //maybe String
 	habitId: mongoose.Schema.Types.ObjectId,
 	habit: [],   
-  	likes: Number //this is a stretch goal
+  	likes: Number, //this is a stretch goal
+  	testDate: { type: Date } //this is a stretch goal
 });
 
 const Activity = mongoose.model('Activity', activitySchema);
