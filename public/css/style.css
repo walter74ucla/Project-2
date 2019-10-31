@@ -99,8 +99,12 @@ form{
 }
 
 .index-user-list{
-    height: 100vh;
+    border-radius: 2.5vw;
+    height: 83vh;
+    border: .5px solid gray;
     width: 70%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .add-activity{
@@ -118,6 +122,10 @@ form{
     border: 3px solid black;
     margin: 3%;
     background: white;
+}
+
+.habit-list{
+    display: inline-flex;
 }
 
 .big-button{
@@ -186,12 +194,6 @@ form{
     width: 75%;
 }
 
-.column{
-    display: inline;
-    flex-direction: column;
-    flex-wrap: nowrap;
-}
-
 .no-padding{
     padding: 0;
 }
@@ -202,4 +204,8 @@ form{
 
 .flex-center{
     justify-content: center;
+}
+
+.hidden{
+    display: none;
 }

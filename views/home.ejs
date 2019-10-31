@@ -8,7 +8,7 @@
         <section class="header-full">
             <h1>habit</h1>
         </section>
-        <div class="inline-flex">
+  
             <section class="no-padding no-margin inline-flex flex-center">
                 <div class="login-window">
                     <h4>Login</h4>
@@ -25,9 +25,8 @@
                     </form> 
                 </div>
             </section>
-        </div>
-        <section>
-            <ul class="list index-user-list">
+     
+            <section class="list index-user-list">
                     <section class="no-padding no-margin inline-flex flex-center">
                             <div class="big-button">
                                     View All Habits:
@@ -42,17 +41,19 @@
                                     </form> 
                             </div>
                     </section>
-                <%#for(let i = 0; i < users.length; i++){%>
-                    <!-- <li>
-                        <a href='/users/<%#=user._id%>'>
-                            <%#=user.username%>
-                            add activity 
-                        </a>
-                    </li> -->
-                <%#}%>
-            </ul>
-        </section>
+                    <%for(let i = 0; i < users.length; i++){%>
+                        
+                        <div class="activity-row">
+                                <div class="icon icon-small fa fa-<%=users[i].activities[0].habit[0].icon%>">
+                                    <span><%=users[i].activities[0].habit[0].name%></span>
+                                </div>
+                                <span><%=users[i].activities[0].habit[0].type%></span>
+                                <span><%=users[i].activities[0].time%></span>
+                                <span><%=users[i].activities[0].date%></span>
+                        </div>
+                    <%}%>
+            </section>
     </main>
-    <script src="../public/js/home.js"></script>
+    <script src="/js/home.js"></script>
 </body>
 </html>

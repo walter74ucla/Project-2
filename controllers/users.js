@@ -166,16 +166,15 @@ router.get('/:id', async(req, res) => {
                                 // .populate('activities.habitId')
                                 .exec();
     //temp until we get populate working
+    //load habit information into activities
     for(let i = 0; i < foundUser.activities.length; i++){
         console.log(foundUser.activities[i]);
         const habitId = foundUser.activities[i]['habitId'];
         const foundHabit = await Habit.findById(habitId);
         foundUser.activities[i].habit.push(foundHabit);
     }
-    console.log('found user show route', foundUser);
+    //load all habits for dropdown menus
     const foundHabits = await Habit.find({});
-    console.log('foundUser', foundUser);
-    console.log('foundHabits', foundHabits);
     res.render('users/show.ejs', {
         user: foundUser,
         loggedIn: req.session.logged,
@@ -189,7 +188,7 @@ router.get('/:id', async(req, res) => {
   }
 });
 
-//Index route async-await
+//index route async-await
 router.get('/', async(req, res) => {
   console.log("user index route");
   try {
