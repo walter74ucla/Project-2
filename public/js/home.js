@@ -1,5 +1,5 @@
 console.log("test");
 
-$(document).ready(()=>{
-    console.log("jQuery loaded!");
+$(document).ready(function(){
+    console.log("test");
 })
