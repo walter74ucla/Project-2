@@ -26,6 +26,7 @@ router.post('/login', async (req, res) => {
           // from the session
           req.session.username = foundUser.username;
           req.session.logged   = true;
+          req.session.userID = foundUser._id;
 
           res.redirect('/users/'+foundUser._id);//User My page-->show page
 
@@ -163,25 +164,33 @@ router.get('/:id', async(req, res) => {
                                 //   path: 'habits',
                                 // })
                                 .populate('activities')
+                                .populate('habits')
                                 // .populate('activities.habitId')
                                 .exec();
+    // console.log('found user', foundUser);
     //temp until we get populate working
+    //load habit information into activities
     for(let i = 0; i < foundUser.activities.length; i++){
-        console.log(foundUser.activities[i]);
+        // console.log(foundUser.activities[i]);
         const habitId = foundUser.activities[i]['habitId'];
+        console.log('habitId: ', habitId)
         const foundHabit = await Habit.findById(habitId);
+        console.log('foundHabit: ', foundHabit);
+        console.log('habit type: ', typeof(foundUser.activities[i].habit));
         foundUser.activities[i].habit.push(foundHabit);
     }
-    console.log('found user show route', foundUser);
+
+    // console.log('found user show route', foundUser);
     const foundHabits = await Habit.find({});
-    console.log('foundUser', foundUser);
-    console.log('foundHabits', foundHabits);
+    console.log('foundUser', foundUser.activities);
+    // console.log('foundHabits', foundHabits);
     res.render('users/show.ejs', {
         user: foundUser,
         loggedIn: req.session.logged,
         username: req.session.username,
         userID: req.params.id,
-        habits: foundHabits
+        habits: foundHabits,
+        self: req.params.id === req.session.userID ? true : false
       });
 
   } catch(err) {
@@ -189,11 +198,14 @@ router.get('/:id', async(req, res) => {
   }
 });
 
-//Index route async-await
+//index route async-await
 router.get('/', async(req, res) => {
   console.log("user index route");
   try {
+
     const allUsers = await User.find({});
+    console.log('all users', allUsers);
+
     res.render('users/index.ejs', {
       users: allUsers,
       loggedIn: req.session.logged,
@@ -225,7 +237,9 @@ router.delete('/:id', async(req, res) => {
             },
             (err, data) => {
               for(let j=0; j < deletedUser.activities.length; j++){
-                activities.push(deletedUser.activities[i]._id);
+
+                activityIds.push(deletedUser.activities[j]._id);
+
               }
               Activity.deleteMany(
                       {

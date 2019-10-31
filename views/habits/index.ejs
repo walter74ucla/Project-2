@@ -5,7 +5,9 @@
 </head>
 <body>
     <% include ../partials/header %>
-
+    <form method='GET' action='/' >
+        <button type='submit' class="back-button fa fa-arrow-left"></button>
+    </form>
     <h2>HABITS INDEX</h2>
     <section class="add-habit">
             <form method="POST" action="/habits/<%=userID%>">
@@ -16,20 +18,23 @@
             </form>
     </section>
     <section>
-            <ul>
+            <div class="list">
                 <%for(let i = 0; i < habits.length; i++){%>
-                    <li class="row">
-                        <%=habits[i].name%>
-                        <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>" method="GET">
-                            <button type="submit">edit</button>
-                        </form>
-                        <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
-                            <button type="submit">X</button>
-                        </form>
-                    </li>
+                    <div class="habit-list">
+                        <div class="icon icon-large fa fa-<%=habits[i].icon%>">
+                        <span><%=habits[i].name%></span>
+                        <!-- should be admin only -->
+                        <%if(loggedIn){%>
+                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>" method="GET">
+                                <button type="submit">edit</button>
+                            </form>
+                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
+                                <button type="submit">X</button>
+                            </form>
+                            <%}%>
+                    </div>
                 <%}%>
-            </ul>
+            </div>
     </section>
-    <a href="/">back</a>
 </body>
 </html>

@@ -12,6 +12,7 @@
         <h2><%=user.username%>'s Habits</h2>
         <div class="inline-flex">
             <aside class="column quarter-column">
+                <%if(loggedIn){%>
                     <div class="inline-flex center">
                             <form action="/users/<%=user._id%>/edit" method="GET">
                                 <button type="submit" class="fa fa-user-edit"></button>
@@ -52,10 +53,15 @@
                                 Icon: <input type="text" name="icon" value=""><br/>
                                 <button type="submit">SUBMIT</button>
                                 <form action="/users/<%=user._id%>/edit" method="GET">
-                                    <button type="submit" class="fa fa-user-edit"></button>
+                                    <button type="submit" class="fa fa-user-edit"></button><--Click here to display your habits
                                 </form>
-                            </form>
-                    </section>
+                        </section>
+                    <%}%>
+                    <%if(!self){%>
+                        <form action="/users/<%=user._id%>/edit" method="GET">
+                            <button type="submit" class="fa fa-heart"></button>
+                        </form>
+                        <%}%>
                     <section class="user-habits">
                             top habits
                                 <% for(let i = 0; i < user.habits.length; i++) { %>
@@ -82,8 +88,8 @@
                             <% for(let i = 0; i < user.activities.length; i++) { %>
                                     <div class="activity-row">
                                         <div class="icon icon-small fa fa-<%=user.activities[i].habit[0].icon%>">
-                                            <span><%=user.activities[i].habit[0].name%></span>
-                                        </div>
+                                        <span><%=user.activities[i].habit[0].name%></span>
+       									</div>
                                         <span><%=user.activities[i].habit[0].type%></span>
                                         <span><%=user.activities[i].time%></span>
                                         <span><%=user.activities[i].date%></span>
