@@ -23,12 +23,15 @@
                     <div class="habit-list">
                         <div class="icon icon-large fa fa-<%=habits[i].icon%>">
                         <span><%=habits[i].name%></span>
-                        <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>" method="GET">
-                            <button type="submit">edit</button>
-                        </form>
-                        <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
-                            <button type="submit">X</button>
-                        </form>
+                        <!-- should be admin only -->
+                        <%if(loggedIn){%>
+                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>" method="GET">
+                                <button type="submit">edit</button>
+                            </form>
+                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
+                                <button type="submit">X</button>
+                            </form>
+                            <%}%>
                     </div>
                 <%}%>
             </div>

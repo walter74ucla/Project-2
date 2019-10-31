@@ -6,9 +6,25 @@
 <body>
     <main>
         <section class="header-full">
-            <h1>habit</h1>
+            <a href="/">
+                <h1><span class="fa fa-carrot"></span>habit</h1>
+            </a>
+            <%if(loggedIn){%>
+                <div class="row align-right">
+                        <!-- <span><%=username%></span> -->
+                        <form action="/users/<%=userID%>">
+                            <button type="submit" class="fa fa-user"></button>
+                        </form>
+                        <form action="/users/<%=userID%>/edit">
+                            <button type="submit" class="fa fa-edit"></button>
+                        </form>
+                        <form action="/users/logout">
+                            <button type="submit">logout</button>
+                        </form>
+                    </div>
+                <%}%>
         </section>
-  
+        <%if(!loggedIn){%>
             <section class="no-padding no-margin inline-flex flex-center">
                 <div class="login-window">
                     <h4>Login</h4>
@@ -25,34 +41,37 @@
                     </form> 
                 </div>
             </section>
-     
-            <section class="list index-user-list">
-                    <section class="no-padding no-margin inline-flex flex-center">
-                            <div class="big-button">
-                                    View All Habits:
-                                    <form action="/habits/" method="GET">
-                                        <button type="submit" class="fa fa-icons"></button>
-                                    </form>
-                            </div>
-                            <div class="big-button">
-                                    View All Users:
-                                    <form action="/users/" method="GET">
-                                        <button type="submit" class="fa fa-users-cog"></button>
-                                    </form> 
-                            </div>
-                    </section>
-                    <%for(let i = 0; i < users.length; i++){%>
-                        
-                        <div class="activity-row">
-                                <div class="icon icon-small fa fa-<%=users[i].activities[0].habit[0].icon%>">
-                                    <span><%=users[i].activities[0].habit[0].name%></span>
-                                </div>
-                                <span><%=users[i].activities[0].habit[0].type%></span>
-                                <span><%=users[i].activities[0].time%></span>
-                                <span><%=users[i].activities[0].date%></span>
+        <%}%>
+            <div class="row">
+                <nav class="no-padding no-margin column">
+                        <div class="big-button">
+                                View All Habits:
+                                <form action="/habits/" method="GET">
+                                    <button type="submit" class="fa fa-icons"></button>
+                                </form>
                         </div>
-                    <%}%>
-            </section>
+                        <div class="big-button">
+                                View All Users:
+                                <form action="/users/" method="GET">
+                                    <button type="submit" class="fa fa-users-cog"></button>
+                                </form> 
+                        </div>
+                    </nav>
+                <section class="list no-margin index-user-list">
+                        <%for(let i = 0; i < users.length; i++){%>
+                            <%const r = Math.floor(Math.random()*users[i].activities.length)%>
+                            <div class="activity-row">
+                                <span><%=users[i].username%></span>
+                                <div class="icon icon-small fa fa-<%=users[i].activities[r].habit[0].icon%>">
+                                    <span><%=users[i].activities[r].habit[0].name%></span>
+                                </div>
+                                <span><%=users[i].activities[r].habit[0].type%></span>
+                                <span><%=users[i].activities[r].time%></span>
+                                <span><%=users[i].activities[r].date%></span>
+                            </div>
+                        <%}%>
+                </section>
+            </div>
     </main>
     <script src="/js/home.js"></script>
 </body>

@@ -163,6 +163,7 @@ router.get('/:id', async(req, res) => {
                                 //   path: 'habits',
                                 // })
                                 .populate('activities')
+                                .populate('habits')
                                 // .populate('activities.habitId')
                                 .exec();
     //temp until we get populate working
@@ -180,7 +181,8 @@ router.get('/:id', async(req, res) => {
         loggedIn: req.session.logged,
         username: req.session.username,
         userID: req.params.id,
-        habits: foundHabits
+        habits: foundHabits,
+        self: req.params.id === req.session.userID ? true : false
       });
 
   } catch(err) {
@@ -192,7 +194,7 @@ router.get('/:id', async(req, res) => {
 router.get('/', async(req, res) => {
   console.log("user index route");
   try {
-    const allUsers = await User.find({});
+    const allUsers = await User.find({visible: true});
     res.render('users/index.ejs', {
       users: allUsers,
       loggedIn: req.session.logged,
@@ -224,7 +226,7 @@ router.delete('/:id', async(req, res) => {
             },
             (err, data) => {
               for(let j=0; j < deletedUser.activities.length; j++){
-                activities.push(deletedUser.activities[i]._id);
+                activityIds.push(deletedUser.activities[i]._id);
               }
               Activity.deleteMany(
                       {

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -48,21 +49,25 @@ app.get('/',async(req,res)=>{
         const randomUser = await User.findOne().skip(r)
                                      .populate('activities')
         //only include users that have activities
-        if(randomUser.activities.length){
+        if(randomUser.visible && randomUser.activities.length){
             for(let i = 0; i < randomUser.activities.length; i++){
                 const habitId = randomUser.activities[i]['habitId'];
                 const foundHabit = await Habit.findById(habitId);
                 randomUser.activities[i].habit.push(foundHabit);
             }
             randomUsers.push(randomUser);
+            console.log(randomUser);
         }
     }
     res.render('home.ejs', {
         message: req.session.message,
-        users: randomUsers
+        users: randomUsers,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID,
     });
 })
     
-app.listen(3000,()=>{
-    console.log("app is listening on port 3000");
-})
+app.listen(process.env.PORT, () => {
+    console.log('listening on port 3000');
+  })

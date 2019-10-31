@@ -102,6 +102,7 @@ form{
     border-radius: 2.5vw;
     height: 83vh;
     border: .5px solid gray;
+    margin-top: 5vh 0;
     width: 70%;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -119,7 +120,7 @@ form{
     justify-content: space-around;
     width: 94%;
     font-size: 4vh;
-    border: 3px solid black;
+    border: 3px solid gray;
     margin: 3%;
     background: white;
 }
