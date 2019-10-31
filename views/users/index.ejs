@@ -16,7 +16,7 @@
                 <%=users[i].username%>
                 <!--ADMIN ONLY-->
                 <form action="/users/<%=users[i]._id%>?_method=DELETE" method="POST">
-                    <button type="submit">X</button>
+                    <button type="submit">DELETE User</button>
                 </form>
             </a>
         </li>

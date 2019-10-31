@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const session = require('express-session');
-require('./db/db');
+//require('./db/db');
 
 //middleware
 // we set up our session before our routes,
