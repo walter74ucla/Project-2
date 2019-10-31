@@ -1,6 +1,6 @@
 <header>
     <a href="/">
-        <h1>habit</h1>
+        <h1><span class="fa fa-carrot"></span>habit</h1>
     </a>
     <%if(!loggedIn){%>
         <div>
@@ -16,13 +16,13 @@
     <%} else {%>
         <div class="row align-right">
             <%=username%>
-            <form action="/users/<%=userID%>">
+            <form action="/users/<%=userID%>" method="GET">
                 <button type="submit" class="fa fa-user"></button>
             </form>
-            <form action="/users/<%=userID%>/edit">
+            <form action="/users/<%=userID%>/edit" method="GET">
                 <button type="submit" class="fa fa-edit"></button>
             </form>
-            <form action="/users/logout">
+            <form action="/users/logout" method="GET">
                 <button type="submit">logout</button>
             </form>
         </div>
