@@ -79,7 +79,7 @@
                                                 <form action="/habits/<%=user.habits[i]._id%>/edit" method="GET">
                                                     <button type="submit" class="fa fa-edit"></button>
                                                 </form>
-                                                <form action="/habits/<%=user.habits[i]._id%>/?_method=DELETE" method="POST">
+                                                <form action="/habits/<%=user.habits[i]._id%>?_method=DELETE" method="POST">
                                                     <button type="submit" class="fa fa-trash"></button>
                                                 </form>
                                                 <%}%>
@@ -101,10 +101,15 @@
                         </div>
                             <% for(let i = 0; i < user.activities.length; i++) { %>
                                     <div class="activity-row">
-                                        <div class="icon icon-small fa fa-<%=user.activities[i].habit[0].icon%>">
-                                        <span><%=user.activities[i].habit[0].name%></span>
-       									</div>
-                                        <span><%=user.activities[i].habit[0].type%></span>
+                                        <%if(user.activities[i].habit[0]){ %>
+                                           <div class="icon icon-small fa fa-<%=user.activities[i].habit[0].icon%>"></div>
+                                            <span><%=user.activities[i].habit[0].name%></span>
+                                            <span><%=user.activities[i].habit[0].type%></span>    
+                                      <% } %>
+
+
+                                        
+                                        
                                         <span><%=user.activities[i].time%></span>
                                         <span><%=user.activities[i].date%></span>
                                         <form action="/activities/<%=userID%>/<%=user.activities[i]._id%>/<%=i%>/edit" method="GET">

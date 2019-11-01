@@ -133,7 +133,7 @@ router.get('/:id', async(req,res) => {
 
 //Delete habit from user route await-async
 //Does this need to be tied to a specific user?
-router.delete('/:id/:index', async(req, res) => {
+router.delete('/:id', async(req, res) => {
   // find the habit and delete it
   console.log("hitting habit delete from user route");
   try {
@@ -146,6 +146,7 @@ router.delete('/:id/:index', async(req, res) => {
     console.log(foundUser);
     const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
         // redirect to users index
+    const deleteRelatedActivities = await Activity.deleteMany({habitId: req.params.id});    
     res.redirect('/users/'+req.session.userID);
   } catch(err) {
     res.send(err);
@@ -153,22 +154,22 @@ router.delete('/:id/:index', async(req, res) => {
 });
 
 //Delete habit from DB
-router.delete('/:userId/:habitId/:habitIndex', async(req, res) => {
-  // find the habit and delete it
-  console.log("hitting habit delete route");
-  try {
-    //must delete habit from user array
-    const deletedHabit = await Habit.findByIdAndRemove(req.params.habitId);
-    const foundUser = await User.findById(req.params.userId);
-    foundUser.habits.splice(req.params.habitIndex,1);
+// router.delete('/:userId/:habitId/:habitIndex', async(req, res) => {
+//   // find the habit and delete it
+//   console.log("hitting habit delete route");
+//   try {
+//     //must delete habit from user array
+//     const deletedHabit = await Habit.findByIdAndRemove(req.params.habitId);
+//     const foundUser = await User.findById(req.params.userId);
+//     foundUser.habits.splice(req.params.habitIndex,1);
 
-    console.log(deletedHabit);
-        // redirect to users index   
-    res.redirect('/users/'+req.params.userId);
-  } catch(err) {
-    res.send(err);
-  }
-});
+//     console.log(deletedHabit);
+//         // redirect to users index   
+//     res.redirect('/users/'+req.params.userId);
+//   } catch(err) {
+//     res.send(err);
+//   }
+// });
 
 
 
