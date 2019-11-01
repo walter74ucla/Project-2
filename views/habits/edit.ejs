@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ./partials/head %>
+    <% include ../partials/head %>
 </head>
 <body>
     <h2>EDIT HABIT</h2>
+    <form method="POST" action="/habits/<%=userID%>/<%=habit._id%>/<%=index%>?_method=PUT">
+        Habit name: <input type="text" name="name" value="<%=habit.name%>"><br/>
+        Type: <input type="text" name="type" value="<%=habit.type%>"><br/>
+        Icon: <input type="text" name="icon" value="<%=habit.icon%>"><br/>
+        <button type="submit">UPDATE</button>
+    </form>
 </body>
 </html>

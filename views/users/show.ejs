@@ -52,6 +52,7 @@
                                 Type: <input type="text" name="type" value=""><br/>
                                 Icon: <input type="text" name="icon" value=""><br/>
                                 <button type="submit">SUBMIT</button>
+                            </form>
                                 <form action="/users/<%=user._id%>/edit" method="GET">
                                     <button type="submit" class="fa fa-user-edit"></button><--Click here to display your habits
                                 </form>
@@ -93,7 +94,7 @@
                                         <span><%=user.activities[i].habit[0].type%></span>
                                         <span><%=user.activities[i].time%></span>
                                         <span><%=user.activities[i].date%></span>
-                                        <form action="/activities/<%=userID%>/<%=user.activities[i]._id%>/<%=i%>/edit" method="POST">
+                                        <form action="/activities/<%=userID%>/<%=user.activities[i]._id%>/<%=i%>/edit" method="GET">
                                             <button type="submit" class="fa fa-edit"></button>
                                         </form>
                                         <form action="/activities/<%=userID%>/<%=user.activities[i]._id%>/<%=i%>?_method=DELETE" method="POST">

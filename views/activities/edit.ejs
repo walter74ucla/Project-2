@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body>
+    <h2>EDIT ACTIVITY</h2>
+    <section>
+            <form action="/activities/<%=activity._id%>?_method=PUT" method="POST">
+                Habit: <input type="text" name="day" value="<%=activity.habit[0].name%>">
+                </br>
+                <%const date = activity.date.split("-")%>
+                <%const day =date[1]%>
+                <%const month = date[0]%>
+                <%const year = date[2]%>
+                Date: 
+                </br>
+                    <input type="text" class="date-field" name="day" value="<%=day%>">
+                    <input type="text" class="date-field" name="month" value="<%=month%>">
+                    <input type="text" class="date-field-long" name="year" value="<%=year%>">
+                </br>
+                Time Spent (mins): <input type="text" name="time" class="date-field-long" value="<%=activity.time%>"></br>
+                <button type="submit">SUBMIT</button>
+            </form>
+    </section>
+</body>
+</html>

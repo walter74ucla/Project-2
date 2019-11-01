@@ -25,7 +25,7 @@
                         <span><%=habits[i].name%></span>
                         <!-- should be admin only -->
                         <%if(loggedIn){%>
-                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>" method="GET">
+                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>/edit" method="GET">
                                 <button type="submit">edit</button>
                             </form>
                             <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">

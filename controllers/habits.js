@@ -68,11 +68,17 @@ router.post('/:id', async(req, res) => {
 
 //Edit route async-await
 //Does this route need to be tied to a specific user?
-router.get('/:id/edit', async(req, res) => {
+router.get('/:userid/:habitid/:habitindex/edit', async(req, res) => {
+  console.log('hitting edit habit route');
+  console.log(req.session.userID);
   try {
-    const foundHabit = await Habit.findById(req.params.id);
+    const foundHabit = await Habit.findById(req.params.habitid);
       res.render('habits/edit.ejs', {
-        habit: foundHabit
+        habit: foundHabit,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.params.userid,
+        index: req.params.habitindex
       }) 
 
   } catch(err) {
@@ -84,7 +90,8 @@ router.get('/:id/edit', async(req, res) => {
 
 //Put route async-await
 //Does this need to be tied to a specific user?
-router.put('/:id', async(req,res) => {
+router.put('/:userid/:habitid/:habitindex', async(req,res) => {
+  console.log("hitting update route");
   try {
     const updatedHabit = await Habit.findByIdAndUpdate(req.params.id, req.body, {new: true});
     res.redirect('/habits/' + req.params.id);
