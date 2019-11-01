@@ -107,7 +107,7 @@ router.get('/:userid/:habitid/:habitindex/edit', async(req, res) => {
 
 //Put route async-await
 //Does this need to be tied to a specific user?
-router.put('/:userid/:habitid/:habitindex', async(req,res) => {
+router.put('/:id/:index', async(req,res) => {
   console.log("hitting update route");
   try {
     const updatedHabit = await Habit.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -152,11 +152,10 @@ router.delete('/:id/:index', async(req, res) => {
   console.log("hitting habit delete from user route");
   try {
     //must delete habit from user array
-    const foundUser = await User.findById(req.params.id);
+    console.log(req.session.userID);
+    const foundUser = await User.findById(req.session.userID);
     console.log(foundUser);
-    const foundHabit = foundUser.habits[req.params.index];
-    console.log(foundHabit);
-    const deletedHabit = await Habit.findByIdAndRemove(foundHabit._id);
+    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
         // redirect to users index
     res.redirect('/users/'+req.param.id);
   } catch(err) {

@@ -31,8 +31,8 @@
                                 <%const year = date.getFullYear()%>
                                 Date: 
                                 </br>
-                                    <input type="text" class="date-field" name="day" value="<%=day%>">
                                     <input type="text" class="date-field" name="month" value="<%=month%>">
+                                    <input type="text" class="date-field" name="day" value="<%=day%>">
                                     <input type="text" class="date-field-long" name="year" value="<%=year%>">
                                 </br>
                                 Time Spent (mins): <input type="text" name="time" class="date-field-long" value="0"></br>
@@ -78,7 +78,7 @@
                                             <form action="/habits/<%=userID%>/" method="GET">
                                                 <button type="submit" class="fa fa-edit"></button>
                                             </form>
-                                            <form action="/habits/<%=userID%>/<%=i%>?_method=DELETE" method="POST">
+                                            <form action="/habits/<%=user.habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
                                                 <button type="submit" class="fa fa-trash"></button>
                                             </form>
                                         </div>
