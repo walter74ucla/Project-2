@@ -120,7 +120,7 @@ router.post('/registration', async (req, res) => {
     // if username already exists, message: please create a different username
     if(foundUser){
       req.session.message = 'Username already exists.  Please try again.';
-      res.redirect('/users/registration');// home page??
+      res.redirect('/users/new');// home page??
     } else {
       // if username does not exist, proceed
       const userDbEntry = {};
@@ -144,7 +144,6 @@ router.post('/registration', async (req, res) => {
       } else {
         res.redirect('/users/'+createdUser._id);//User My page-->show page
       }
-      
     }
   } catch(err) {
     res.send(err);
