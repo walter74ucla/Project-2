@@ -75,12 +75,14 @@
                                         <span class="fa fa-<%=user.habits[i].icon%>"></span>
                                         <%=user.habits[i].name%>
                                         <div class="row">
-                                            <form action="/habits/<%=userID%>/" method="GET">
-                                                <button type="submit" class="fa fa-edit"></button>
-                                            </form>
-                                            <form action="/habits/<%=user.habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
-                                                <button type="submit" class="fa fa-trash"></button>
-                                            </form>
+                                            <%if(self){%>
+                                                <form action="/habits/<%=user.habits[i]._id%>/edit" method="GET">
+                                                    <button type="submit" class="fa fa-edit"></button>
+                                                </form>
+                                                <form action="/habits/<%=user.habits[i]._id%>/?_method=DELETE" method="POST">
+                                                    <button type="submit" class="fa fa-trash"></button>
+                                                </form>
+                                                <%}%>
                                         </div>
                                     </div>
                                     </a>

@@ -22,16 +22,16 @@
                 <%for(let i = 0; i < habits.length; i++){%>
                     <div class="habit-list">
                         <a href="/habits/<%=habits[i]._id%>">
-                            <div class="icon icon-large fa fa-<%=habits[i].icon%>">
+                            <div class="icon icon-large fa fa-<%=habits[i].icon%>"></div>
                             <span><%=habits[i].name%></span>
                             <%if(admin){%>
                                 <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>/edit" method="GET">
-                                    <button type="submit">edit</button>
+                                    <button type="submit" class="fa fa-edit"></button>
                                 </form>
                                 <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
-                                    <button type="submit">X</button>
+                                    <button type="submit" class="fa fa-trash"></button>
                                 </form>
-                                <%}%>
+                            <%}%>
                         </a>
                     </div>
                 <%}%>
