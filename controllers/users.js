@@ -27,7 +27,7 @@ router.post('/login/admin', async (req, res) => {
           req.session.logged   = true;
           req.session.userID = foundUser._id;
           req.session.admin = true;
-          console.log("logged in as admin");
+          console.log("logged in as admin")
           res.redirect('/admin/index/')
 
         } else {

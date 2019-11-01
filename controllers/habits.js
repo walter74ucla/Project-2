@@ -41,25 +41,41 @@ router.post('/:id', async(req, res) => {
   console.log("hitting create habit");
   try {
     // create habit
-    const newHabit = await Habit.create(req.body);
-    console.log('newHabit', newHabit);
-    // find user by id (req.body.userId)
-    const foundUser = await User.findById(req.params.id);
-    // push newly created habit into foundUser.habits array
-    foundUser.habits.push(newHabit._id);
-    // save foundUser
-    foundUser.save();
-    console.log('foundUser: ', foundUser);
-    // res.redirect to index route
-    res.redirect('/habits'
-    //   , {
-    //   user: foundUser,
-    //   loggedIn: req.session.logged,
-    //   username: req.session.username,
-    //   userID: req.params.id,
-    //   habits: foundHabits
-    // }
-    );
+    if(req.session.admin){
+      //create permanent habit
+      const habitObj = {};
+      habitObj.name = req.body.name;
+      habitObj.type = req.body.type;
+      habitObj.icon = req.body.icon;
+      habitObj.permanent = true;
+      const newHabit = await Habit.create(habitObj);
+      res.redirect('/habits', {
+        user: foundUser,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.params.id,
+        }
+      );
+    } else {
+      const newHabit = await Habit.create(req.body);
+      console.log('newHabit', newHabit);
+        // find user by id (req.body.userId)
+      const foundUser = await User.findById(req.params.id);
+      // push newly created habit into foundUser.habits array
+      foundUser.habits.push(newHabit._id);
+      // save foundUser
+      await foundUser.save();
+      console.log('foundUser: ', foundUser);
+      // res.redirect to index route
+      res.redirect('/habits', {
+          user: foundUser,
+          loggedIn: req.session.logged,
+          username: req.session.username,
+          userID: req.params.id,
+        }
+      );
+    }
+    
 
 
   } catch(err) {

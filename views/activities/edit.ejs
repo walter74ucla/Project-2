@@ -4,6 +4,9 @@
     <% include ../partials/head %>
 </head>
 <body>
+    <form method='GET' action='/users/<%=userID%>' >
+        <button type='submit' class="back-button fa fa-arrow-left"></button>
+    </form>
     <h2>EDIT ACTIVITY</h2>
     <section>
             <form action="/activities/<%=activity._id%>?_method=PUT" method="POST">

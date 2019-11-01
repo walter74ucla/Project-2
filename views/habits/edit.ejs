@@ -5,6 +5,9 @@
 </head>
 <body>
     <h2>EDIT HABIT</h2>
+    <form method='GET' action='/users/<%=userID%>' >
+        <button type='submit' class="back-button fa fa-arrow-left"></button>
+    </form>
     <form method="POST" action="/habits/<%=userID%>/<%=habit._id%>/<%=index%>?_method=PUT">
         Habit name: <input type="text" name="name" value="<%=habit.name%>"><br/>
         Type: <input type="text" name="type" value="<%=habit.type%>"><br/>

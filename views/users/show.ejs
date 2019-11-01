@@ -62,20 +62,31 @@
                         <form action="/users/<%=user._id%>/edit" method="GET">
                             <button type="submit" class="fa fa-heart"></button>
                         </form>
-                        <%}%>
-                    <section class="user-habits">
-                            top habits
-                                <% for(let i = 0; i < user.habits.length; i++) { %>
-                                    <div value="<%=user.habits[i]._id%>">
-                                        <%=user.habits[i].name%>
-                                        <form action="/habits/<%=userID%>/<%=i%>?_method=DELETE" method="POST">
-                                            <button type="submit">X</button>
-                                        </form>
-                                    </div>
-                                <% } %>
-                    </section>
+                    <%}%>
+                    
             </aside>
             <div class="column three-quarter-column">
+                <section class="user-habits">
+                            top habits
+                            <div class="row">
+                                <% for(let i = 0; i < user.habits.length; i++) { %>
+                                    <a href="/habits/<%=user.habits[i]._id%>">
+                                    <div class="habit-list">
+                                        <span class="fa fa-<%=user.habits[i].icon%>"></span>
+                                        <%=user.habits[i].name%>
+                                        <div class="row">
+                                            <form action="/habits/<%=userID%>/" method="GET">
+                                                <button type="submit" class="fa fa-edit"></button>
+                                            </form>
+                                            <form action="/habits/<%=userID%>/<%=i%>?_method=DELETE" method="POST">
+                                                <button type="submit" class="fa fa-trash"></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </a>
+                                <% } %>
+                            </div>
+                </section>
                 <section>
                     recent activities
                     <div class="list-full">
