@@ -6,12 +6,16 @@
 <body>
     <% include ../partials/header %>
     <main>
+
             <h2>ADD NEW USER</h2>
+            <%if(message){%>
+                        <p><%=message%></p>
+                        <%}%>
             <section>
                 <form action="/users/registration" method="POST">
-                    Username:<input type="text" name="username" placeholder="username"><br>
-                    Email:<input type="email" name="email" placeholder="email"><br>
-                    Password:<input type="password" name="password" placeholder="password"><br>
+                    Username:<input type="text" name="username" placeholder="username" required><br>
+                    Email:<input type="email" name="email" placeholder="email" required><br>
+                    Password:<input type="password" name="password" placeholder="password" required><br>
                     Be Visible to Other Users:<input type="checkbox" name="visible" checked><br>
                     <button type="submit">Register</button>
                 </form>
