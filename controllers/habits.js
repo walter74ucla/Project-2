@@ -4,6 +4,25 @@ const Habit = require('../models/habit.js');
 const Activity = require('../models/activity.js');
 const User = require('../models/user.js');
 
+//Edit route async-await
+//Does this route need to be tied to a specific user?
+router.get('/:habitid/edit', async(req, res) => {
+  console.log('hitting edit habit route');
+  console.log(req.session.userID);
+  try {
+    const foundHabit = await Habit.findById(req.params.habitid);
+    res.render('habits/edit.ejs', {
+        habit: foundHabit,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID
+      }) 
+
+  } catch(err) {
+    res.send(err);
+  }
+
+});
 
 //Index route async-await
 router.get('/', async(req, res) => {
@@ -49,13 +68,7 @@ router.post('/:id', async(req, res) => {
       habitObj.icon = req.body.icon;
       habitObj.permanent = true;
       const newHabit = await Habit.create(habitObj);
-      res.redirect('/habits', {
-        user: foundUser,
-        loggedIn: req.session.logged,
-        username: req.session.username,
-        userID: req.params.id,
-        }
-      );
+      res.redirect('/habits');
     } else {
       const newHabit = await Habit.create(req.body);
       console.log('newHabit', newHabit);
@@ -67,13 +80,7 @@ router.post('/:id', async(req, res) => {
       await foundUser.save();
       console.log('foundUser: ', foundUser);
       // res.redirect to index route
-      res.redirect('/habits', {
-          user: foundUser,
-          loggedIn: req.session.logged,
-          username: req.session.username,
-          userID: req.params.id,
-        }
-      );
+      res.redirect('/habits');
     }
     
 
@@ -83,31 +90,10 @@ router.post('/:id', async(req, res) => {
   }
 });
 
-//Edit route async-await
-//Does this route need to be tied to a specific user?
-router.get('/:userid/:habitid/:habitindex/edit', async(req, res) => {
-  console.log('hitting edit habit route');
-  console.log(req.session.userID);
-  try {
-    const foundHabit = await Habit.findById(req.params.habitid);
-      res.render('habits/edit.ejs', {
-        habit: foundHabit,
-        loggedIn: req.session.logged,
-        username: req.session.username,
-        userID: req.params.userid,
-        index: req.params.habitindex
-      }) 
-
-  } catch(err) {
-    res.send(err);
-  }
-
-});
-
 
 //Put route async-await
 //Does this need to be tied to a specific user?
-router.put('/:userid/:habitid/:habitindex', async(req,res) => {
+router.put('/:id/:index', async(req,res) => {
   console.log("hitting update route");
   try {
     const updatedHabit = await Habit.findByIdAndUpdate(req.params.id, req.body, {new: true});
@@ -151,14 +137,16 @@ router.delete('/:id/:index', async(req, res) => {
   // find the habit and delete it
   console.log("hitting habit delete from user route");
   try {
+    if(!req.session.userID){
+      res.redirect('/');
+    }
     //must delete habit from user array
-    const foundUser = await User.findById(req.params.id);
+    console.log(req.session.userID);
+    const foundUser = await User.findById(req.session.userID);
     console.log(foundUser);
-    const foundHabit = foundUser.habits[req.params.index];
-    console.log(foundHabit);
-    const deletedHabit = await Habit.findByIdAndRemove(foundHabit._id);
+    const deletedHabit = await Habit.findByIdAndRemove(req.params.id);
         // redirect to users index
-    res.redirect('/users/'+req.param.id);
+    res.redirect('/users/'+req.session.userID);
   } catch(err) {
     res.send(err);
   }

@@ -149,7 +149,6 @@ router.post('/registration', async (req, res) => {
       } else {
         res.redirect('/users/'+createdUser._id);//User My page-->show page
       }
-      
     }
   } catch(err) {
     req.session.message = 'Registration error. Please try again.';

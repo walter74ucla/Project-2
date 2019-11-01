@@ -8,7 +8,7 @@
     <form method='GET' action='/users/<%=userID%>' >
         <button type='submit' class="back-button fa fa-arrow-left"></button>
     </form>
-    <form method="POST" action="/habits/<%=userID%>/<%=habit._id%>/<%=index%>?_method=PUT">
+    <form method="POST" action="/habits/<%=habit._id%>/?_method=PUT">
         Habit name: <input type="text" name="name" value="<%=habit.name%>"><br/>
         Type: <input type="text" name="type" value="<%=habit.type%>"><br/>
         Icon: <input type="text" name="icon" value="<%=habit.icon%>"><br/>
