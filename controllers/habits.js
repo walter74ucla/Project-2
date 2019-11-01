@@ -18,7 +18,8 @@ router.get('/', async(req, res) => {
       habits: allHabits,
       loggedIn: req.session.logged,
       username: req.session.username,
-      userID: req.session.userID
+      userID: req.session.userID,
+      admin: req.session.admin
 		}); 
 	} catch(err) {
 		res.send(err);

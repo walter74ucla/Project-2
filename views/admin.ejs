@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./partials/head %>
+</head>
+<body>
+    <h2>HABIT ADMIN LOGIN</h2>
+        <section class="no-padding no-margin inline-flex flex-center">
+            <div class="login-window">
+                <h4>Admin Login</h4>
+                <form action="/users/login/admin" method="POST">
+                    <input type="text" name="username" placeholder="username"><br>
+                    <input type="password" name="password" placeholder="password"><br>
+                    <button type="submit">Login</button>
+                </form> 
+            </div>
+        </section>
+</body>
+</html>

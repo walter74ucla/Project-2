@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./partials/head %>
+</head>
+<body>
+    <h2>HABIT ADMIN USERS INDEX</h2>
+        <h3>New User</h3>
+        <section class="no-padding no-margin inline-flex flex-center">
+                <section>
+                    <form action="/users/registration" method="POST">
+                        Username:<input type="text" name="username" placeholder="username"><br>
+                        Email:<input type="email" name="email" placeholder="email"><br>
+                        Password:<input type="password" name="password" placeholder="password"><br>
+                        Be Visible to Other Users:<input type="checkbox" name="visible"><br>
+                        Admin Priviledges?:<input type="checkbox" name="admin" checked><br>
+                        <button type="submit">Register</button>
+                    </form>
+                </section>
+                <form method='GET' action='/' >
+                    <button type='submit'>back</button>
+                </form>
+        </section>
+</body>
+</html>

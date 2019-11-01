@@ -3,14 +3,14 @@
         <h1><span class="fa fa-carrot"></span>habit</h1>
     </a>
     <%if(!loggedIn){%>
-        <div>
+        <div class="row">
                 <form action="/users/login" method="POST">
                     <input type="text" name="username" placeholder="username"><br>
                     <input type="password" name="password" placeholder="password"><br>
-                    <button type="submit">Login</button>
+                    <button class="button-small" type="submit">Login</button>
                 </form> 
                 <form action="/users/new" method="GET">
-                    <button type="submit">Sign Up</button>
+                    <button class="button-small" type="submit">Sign Up</button>
                 </form>
         </div>
     <%} else {%>

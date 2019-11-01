@@ -5,6 +5,52 @@ const Habit = require('../models/habit');
 const Activity = require('../models/activity');
 const bcrypt = require('bcryptjs');
 
+router.post('/login/admin', async (req, res) => {
+  console.log("log-in route");
+  // find if the user exists
+  try {
+    console.log(req.body);                         
+    const foundUser = await User.findOne({username: req.body.username});
+                                
+    // if User.findOne returns null/ or undefined it won't throw an error
+    if(foundUser){
+      console.log("user found");
+        // compare their passwords
+        if(bcrypt.compareSync(req.body.password, foundUser.password)){
+          console.log("password matches");
+          // if true let's log them in
+          // start our session
+          req.session.message = '';
+          // if there are failed attempts get rid of the message
+          // from the session
+          req.session.username = foundUser.username;
+          req.session.logged   = true;
+          req.session.userID = foundUser._id;
+          req.session.admin = true;
+          console.log("logged in as admin");
+          res.redirect('/admin/index/')
+
+        } else {
+          console.log("wrong password");
+            // if the passwords don't match
+           req.session.message = 'Username or password is incorrect';
+           res.redirect('/');// home page??
+        }
+
+    } else {
+      console.log("user not found");
+      req.session.message = 'Username or password is incorrect';
+      res.redirect('/');//User My page-->show page
+      // / is where the form is
+
+    }
+
+  } catch(err){
+    res.send(err);
+  }
+
+});
+
 router.post('/login', async (req, res) => {
   console.log("log-in route");
   // find if the user exists
@@ -27,6 +73,7 @@ router.post('/login', async (req, res) => {
           req.session.username = foundUser.username;
           req.session.logged   = true;
           req.session.userID = foundUser._id;
+          req.session.admin = false;
 
           res.redirect('/users/'+foundUser._id);//User My page-->show page
 
@@ -83,7 +130,7 @@ router.post('/registration', async (req, res) => {
       userDbEntry.password = passwordHash;
       userDbEntry.email = req.body.email;
       userDbEntry.visible = req.body.visible === "on" ? true : false;
-
+      userDbEntry.admin = req.body.admin === "on" ? true : false;
       // added the user to the db
       const createdUser = await User.create(userDbEntry);
       console.log('createdUser', createdUser);
@@ -92,7 +139,12 @@ router.post('/registration', async (req, res) => {
       req.session.logged = true;
       req.session.message = '';
 
-      res.redirect('/users/'+createdUser._id);//User My page-->show page
+      if(createdUser.admin){
+        res.redirect('/admin/index');//User My page-->show page
+      } else {
+        res.redirect('/users/'+createdUser._id);//User My page-->show page
+      }
+      
     }
   } catch(err) {
     res.send(err);
@@ -123,7 +175,8 @@ router.get('/:id/edit', async(req, res) => {
         user: foundUser,
         loggedIn: req.session.logged,
         username: req.session.username,
-        userID: req.session.userID
+        userID: req.session.userID,
+        admin: req.session.admin
       })  
   } catch(err) {
     res.send(err);
@@ -173,16 +226,16 @@ router.get('/:id', async(req, res) => {
     for(let i = 0; i < foundUser.activities.length; i++){
         // console.log(foundUser.activities[i]);
         const habitId = foundUser.activities[i]['habitId'];
-        console.log('habitId: ', habitId)
+        //console.log('habitId: ', habitId)
         const foundHabit = await Habit.findById(habitId);
-        console.log('foundHabit: ', foundHabit);
-        console.log('habit type: ', typeof(foundUser.activities[i].habit));
+        //console.log('foundHabit: ', foundHabit);
+        //console.log('habit type: ', typeof(foundUser.activities[i].habit));
         foundUser.activities[i].habit.push(foundHabit);
     }
 
     // console.log('found user show route', foundUser);
     const foundHabits = await Habit.find({});
-    console.log('foundUser', foundUser.activities);
+    //console.log('foundUser', foundUser.activities);
     // console.log('foundHabits', foundHabits);
     res.render('users/show.ejs', {
         user: foundUser,
@@ -190,7 +243,8 @@ router.get('/:id', async(req, res) => {
         username: req.session.username,
         userID: req.params.id,
         habits: foundHabits,
-        self: req.params.id === req.session.userID ? true : false
+        self: req.params.id === req.session.userID ? true : false,
+        admin: req.session.admin
       });
 
   } catch(err) {
@@ -202,15 +256,13 @@ router.get('/:id', async(req, res) => {
 router.get('/', async(req, res) => {
   console.log("user index route");
   try {
-
-    const allUsers = await User.find({});
-    console.log('all users', allUsers);
-
+    const allUsers = await User.find({visible:true});
     res.render('users/index.ejs', {
       users: allUsers,
       loggedIn: req.session.logged,
       username: req.session.username,
-      userID: req.session.userID
+      userID: req.session.userID,
+      admin: req.session.admin
     });
   } catch(err) {
     res.send(err);

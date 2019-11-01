@@ -68,6 +68,26 @@ app.get('/',async(req,res)=>{
         userID: req.session.userID,
     });
 })
+
+//Admin Login Route
+app.get('/admin', async(req,res)=>{
+    res.render('admin.ejs', {
+        admin: req.session.admin,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID,
+    });
+})
+
+//Admin Show
+app.get('/admin/index', async(req,res)=>{
+    res.render('adminindex.ejs', {
+        admin: req.session.admin,
+        loggedIn: req.session.logged,
+        username: req.session.username,
+        userID: req.session.userID,
+    });
+})
     
 app.listen(process.env.PORT, () => {
     console.log('listening on port 3000');

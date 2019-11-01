@@ -21,17 +21,18 @@
             <div class="list">
                 <%for(let i = 0; i < habits.length; i++){%>
                     <div class="habit-list">
-                        <div class="icon icon-large fa fa-<%=habits[i].icon%>">
-                        <span><%=habits[i].name%></span>
-                        <!-- should be admin only -->
-                        <%if(loggedIn){%>
-                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>/edit" method="GET">
-                                <button type="submit">edit</button>
-                            </form>
-                            <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
-                                <button type="submit">X</button>
-                            </form>
-                            <%}%>
+                        <a href="/habits/<%=habits[i]._id%>">
+                            <div class="icon icon-large fa fa-<%=habits[i].icon%>">
+                            <span><%=habits[i].name%></span>
+                            <%if(admin){%>
+                                <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>/edit" method="GET">
+                                    <button type="submit">edit</button>
+                                </form>
+                                <form action="/habits/<%=userID%>/<%=habits[i]._id%>/<%=i%>?_method=DELETE" method="POST">
+                                    <button type="submit">X</button>
+                                </form>
+                                <%}%>
+                        </a>
                     </div>
                 <%}%>
             </div>

@@ -14,10 +14,11 @@
         <li>
             <a href="/users/<%=users[i]._id%>">
                 <%=users[i].username%>
-                <!--ADMIN ONLY-->
-                <form action="/users/<%=users[i]._id%>?_method=DELETE" method="POST">
-                    <button type="submit">DELETE User</button>
-                </form>
+                <%if(admin){%>
+                    <form action="/users/<%=users[i]._id%>?_method=DELETE" method="POST">
+                        <button type="submit">DELETE User</button>
+                    </form>
+                <%}%>
             </a>
         </li>
     <%}%>

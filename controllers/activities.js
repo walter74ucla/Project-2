@@ -11,7 +11,8 @@ router.get('/', async(req, res) => {
 		const allActivities = await Activity.find({});
 		// render index.ejs and inject data
 		res.render('activities/index.ejs', {
-			activities: allActivities
+      activities: allActivities,
+      admin: req.session.admin
 		}) 
 
 	} catch(err) {
@@ -84,7 +85,6 @@ router.get('/:userid/:activityid/:activityIndex/edit', async(req, res) => {
 
 
 //Put route async-await
-//Does this need to be tied to a specific user?
 router.put('/:id/', async(req,res) => {
   console.log("hitting activities update route");
   console.log(req.body);
@@ -101,7 +101,6 @@ router.put('/:id/', async(req,res) => {
   } catch(err) {
     res.send(err);
   }
-
 });
 
 //Show route async-await

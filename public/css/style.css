@@ -127,7 +127,27 @@ form{
 }
 
 .habit-list{
-    display: inline-flex;
+    border: 3px solid gray;
+    padding: 1vw;
+    margin: 1vw;
+    background: rgba(255,255,255,.5);
+}
+
+.habit-list:hover{
+    border: 3px solid rgb(245, 185, 163);
+    background: rgba(255,255,255,1);
+}
+
+.habit-list span{
+    color: black;
+}
+
+.habit-list:hover span{
+    color: coral;
+}
+
+.habit-list:hover div{
+    color: coral;
 }
 
 .big-button{
@@ -148,6 +168,8 @@ form{
     font-size: 4vw;
     line-height: 4vw;
 }
+
+
 
 .date-field{
     width: 15px;

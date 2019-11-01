@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Activity' // all the id's reference an Activity document
   }], // this array will be an array of activity id's
-  follows: []//this is a stretch goal
+  follows: [],//this is a stretch goal
+  admin: {type: Boolean, default: false}
 });
 
 
