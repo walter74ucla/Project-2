@@ -61,13 +61,15 @@
                         <%for(let i = 0; i < users.length; i++){%>
                             <%const r = Math.floor(Math.random()*users[i].activities.length)%>
                             <div class="activity-row">
-                                <span><%=users[i].username%></span>
-                                <div class="icon icon-small fa fa-<%=users[i].activities[r].habit[0].icon%>">
-                                    <span><%=users[i].activities[r].habit[0].name%></span>
-                                </div>
-                                <span><%=users[i].activities[r].habit[0].type%></span>
-                                <span><%=users[i].activities[r].time%></span>
-                                <span><%=users[i].activities[r].date%></span>
+                                <a href="/users/<%=users[i]._id%>">
+                                    <span><%=users[i].username%></span>
+                                    <div class="icon icon-small fa fa-<%=users[i].activities[r].habit[0].icon%>">
+                                        <span><%=users[i].activities[r].habit[0].name%></span>
+                                    </div>
+                                    <span><%=users[i].activities[r].habit[0].type%></span>
+                                    <span><%=users[i].activities[r].time%></span>
+                                    <span><%=users[i].activities[r].date%></span>
+                                </a>
                             </div>
                         <%}%>
                 </section>
