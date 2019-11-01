@@ -103,7 +103,8 @@ router.get('/new', (req,res) => {
   console.log("hitting new user route");
   //create new user
   res.render('./users/new.ejs', {
-     loggedIn: false
+     loggedIn: false,
+     message: req.session.message
   });
 })
 
@@ -120,8 +121,12 @@ router.post('/registration', async (req, res) => {
     // if username already exists, message: please create a different username
     if(foundUser){
       req.session.message = 'Username already exists.  Please try again.';
-      res.redirect('/users/new');// home page??
+      res.redirect('/users/new');
     } else {
+      if(!req.body.username || !req.body.password || req.body.email){
+        req.session.message = 'Registration error. Please try again.';
+        res.redirect('/users/new');
+      }
       // if username does not exist, proceed
       const userDbEntry = {};
       // right side of these are the info from the form
@@ -146,7 +151,8 @@ router.post('/registration', async (req, res) => {
       }
     }
   } catch(err) {
-    res.send(err);
+    req.session.message = 'Registration error. Please try again.';
+    res.redirect('/users/new');
   }
 });
 
