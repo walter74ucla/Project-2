@@ -12,7 +12,7 @@
         <h2><%=user.username%>'s Habits</h2>
         <div class="inline-flex">
             <aside class="column quarter-column">
-                <%if(loggedIn){%>
+                <%if(self && loggedIn){%>
                     <div class="inline-flex center">
                             <form action="/users/<%=user._id%>/edit" method="GET">
                                 <button type="submit" class="fa fa-user-edit"></button>
