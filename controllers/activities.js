@@ -67,13 +67,15 @@ router.get('/:userid/:activityid/:activityIndex/edit', async(req, res) => {
     const foundActivity = await Activity.findById(req.params.activityid);
     const foundHabit = await Habit.findById(foundActivity.habitId);
     foundActivity.habit.push(foundHabit);
+    const allHabits = await Habit.find({});
     console.log(foundActivity);
       res.render('activities/edit.ejs', {
         activity: foundActivity,
         loggedIn: req.session.logged,
         username: req.session.username,
         userID: req.params.userid,
-        index: req.params.activityindex
+        index: req.params.activityindex,
+        habits: allHabits
       }) 
   } catch(err) {
     res.send(err);
@@ -83,10 +85,16 @@ router.get('/:userid/:activityid/:activityIndex/edit', async(req, res) => {
 
 //Put route async-await
 //Does this need to be tied to a specific user?
-router.put('/:activityid/', async(req,res) => {
-  console.log("hitting activities update");
+router.put('/:id/', async(req,res) => {
+  console.log("hitting activities update route");
+  console.log(req.body);
   try {
-    const updatedActivity = await Activity.findByIdAndUpdate(req.params.activityid, req.body, {new: true});
+    const loadObj = {
+      date: req.body.month + "-" + req.body.day + "-" + req.body.year,
+      time: req.body.time,
+      habitId: req.body.habitId,
+    }
+    const updatedActivity = await Activity.findByIdAndUpdate(req.params.id, loadObj, {new: true});
     console.log(updatedActivity);
     res.redirect('/');
   

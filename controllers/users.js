@@ -167,7 +167,7 @@ router.get('/:id', async(req, res) => {
                                 .populate('habits')
                                 // .populate('activities.habitId')
                                 .exec();
-    // console.log('found user', foundUser);
+    console.log('found user', foundUser);
     //temp until we get populate working
     //load habit information into activities
     for(let i = 0; i < foundUser.activities.length; i++){

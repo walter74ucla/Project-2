@@ -7,7 +7,12 @@
     <h2>EDIT ACTIVITY</h2>
     <section>
             <form action="/activities/<%=activity._id%>?_method=PUT" method="POST">
-                Habit: <input type="text" name="day" value="<%=activity.habit[0].name%>">
+                Habit: 
+                <select name="habitId">
+                        <% for(let i = 0; i < habits.length; i++) { %>
+                            <option value="<%=habits[i]._id%>"><%=habits[i].name%></option>
+                        <% } %>
+                </select><br/>
                 </br>
                 <%const date = activity.date.split("-")%>
                 <%const day =date[1]%>
