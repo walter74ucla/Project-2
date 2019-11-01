@@ -123,7 +123,7 @@ router.post('/registration', async (req, res) => {
       req.session.message = 'Username already exists.  Please try again.';
       res.redirect('/users/new');
     } else {
-      if(!req.body.username || !req.body.password || req.body.email){
+      if(!req.body.username || !req.body.password || !req.body.email){
         req.session.message = 'Registration error. Please try again.';
         res.redirect('/users/new');
       }
